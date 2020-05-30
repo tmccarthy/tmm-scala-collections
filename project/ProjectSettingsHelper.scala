@@ -16,7 +16,7 @@ final case class ProjectSettingsHelper private (
   githubUserEmail: String = "ebh042@gmail.com",
   githubUserWebsite: String = "http://tmm.id.au",
 
-  primaryScalaVersion: String = "2.13.0", // Change these in the circleci file if you change them here
+  primaryScalaVersion: String = "2.13.0", // Change these in the circleci file if you change them here // TODO update this
   otherScalaVersions: List[String] = List(), // Change these in the circleci file if you change them here
 ) {
 
@@ -26,7 +26,7 @@ final case class ProjectSettingsHelper private (
       Sonatype.SonatypeKeys.sonatypeProfileName := sonatypeProfile,
     ) ++ sbt.inThisBuild(
       List(
-        addCompilerPlugin("org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary),
+        addCompilerPlugin("org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary), // TODO upgrade this
         organization := sonatypeProfile + "." + baseProjectName,
         publishMavenStyle := true,
         sonatypeProjectHosting := Some(GitHubHosting(githubUser, githubProjectName, githubUserFullName, githubUserEmail)),
