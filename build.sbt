@@ -8,6 +8,7 @@ lazy val root = project
   .settings(console := (console in Compile in core).value)
   .aggregate(
     core,
+    scalaCheck,
     cats,
     circe,
   )
@@ -17,6 +18,14 @@ val catsVersion = "2.2.0-M2"
 lazy val core = project
   .in(file("core"))
   .settings(settingsHelper.settingsForSubprojectCalled("core"))
+
+lazy val scalaCheck = project
+  .in(file("scalacheck"))
+  .settings(settingsHelper.settingsForSubprojectCalled("scalacheck"))
+  .settings(
+    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3",
+  )
+  .dependsOn(core)
 
 lazy val cats = project
   .in(file("cats"))
