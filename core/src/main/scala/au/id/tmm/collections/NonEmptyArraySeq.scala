@@ -30,7 +30,7 @@ object NonEmptyArraySeq {
   // ArraySeq instances
 
   def one[A : ClassTag](a: A): NonEmptyArraySeq[A] =
-    new NonEmptyArraySeq[A](ArraySeq[A](a))
+    new NonEmptyArraySeq[A](ArraySeq.fill[A](1)(a))
 
   def fromHeadTail[A : ClassTag](head: A, tail: Iterable[A]): NonEmptyArraySeq[A] =
     new NonEmptyArraySeq[A](
