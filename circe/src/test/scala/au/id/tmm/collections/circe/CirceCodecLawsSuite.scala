@@ -1,9 +1,6 @@
 package au.id.tmm.collections.circe
 
-import au.id.tmm.collections.cats.instances.dupelessSeq._
-import au.id.tmm.collections.cats.instances.nonEmptyArraySeq._
-import au.id.tmm.collections.cats.instances.nonEmptyDupelessSeq._
-import au.id.tmm.collections.cats.instances.nonEmptySet._
+import au.id.tmm.collections.cats.instances.all._
 import au.id.tmm.collections.scalacheck.all._
 import au.id.tmm.collections.{DupelessSeq, NonEmptyArraySeq, NonEmptyDupelessSeq, NonEmptySet}
 import cats.instances.arraySeq._

@@ -2,6 +2,7 @@ package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptyDupelessSeq
 import au.id.tmm.collections.cats.instances.nonEmptyDupelessSeq._
+import au.id.tmm.collections.cats.instances.unlawful
 import au.id.tmm.collections.scalacheck.nonEmptyDupelessSeq._
 import au.id.tmm.utilities.testing.AdHocTestIgnore
 import cats.data.Validated
@@ -34,7 +35,8 @@ class NonEmptyDupelessSeqInstancesLawsSpec extends CatsSuite with AdHocTestIgnor
 
   checkAll(
     "Monad for NonEmptyDupelessSeq",
-    MonadTests[NonEmptyDupelessSeq](unlawful.catsUnlawfulInstancesForNonEmptyDupelessSeq).monad[Int, Int, Int],
+    MonadTests[NonEmptyDupelessSeq](unlawful.nonEmptyDupelessSeq.catsUnlawfulInstancesForNonEmptyDupelessSeq)
+      .monad[Int, Int, Int],
   )
 
 }
