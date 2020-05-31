@@ -26,7 +26,7 @@ final case class ProjectSettingsHelper private (
       Sonatype.SonatypeKeys.sonatypeProfileName := sonatypeProfile,
     ) ++ sbt.inThisBuild(
       List(
-        addCompilerPlugin("org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary), // TODO upgrade this
+        addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.0" cross CrossVersion.full), // TODO upgrade this
         organization := sonatypeProfile + "." + baseProjectName,
         publishMavenStyle := true,
         sonatypeProjectHosting := Some(GitHubHosting(githubUser, githubProjectName, githubUserFullName, githubUserEmail)),

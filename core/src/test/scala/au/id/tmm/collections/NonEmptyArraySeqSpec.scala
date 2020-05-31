@@ -1,11 +1,11 @@
 package au.id.tmm.collections
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.collection.immutable.ArraySeq
 import scala.reflect.ClassTag
 
-class NonEmptyArraySeqSpec extends FlatSpec {
+class NonEmptyArraySeqSpec extends AnyFlatSpec {
 
   private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: NonEmptyArraySeq[_]): Unit =
     assert(nonEmptyArraySeq.underlying.getClass === implicitly[ClassTag[T]].runtimeClass)

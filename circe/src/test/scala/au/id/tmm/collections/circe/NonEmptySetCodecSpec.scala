@@ -4,9 +4,9 @@ import au.id.tmm.collections.NonEmptySet
 import au.id.tmm.utilities.testing.syntax._
 import io.circe.syntax.EncoderOps
 import io.circe.{Encoder, Json}
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class NonEmptySetCodecSpec extends FlatSpec {
+class NonEmptySetCodecSpec extends AnyFlatSpec {
 
   "the non empty set encoder" should "encode a non-empty set of ordered elements" in {
     assert(NonEmptySet.of(1, 2).asJson === Json.arr(1.asJson, 2.asJson))

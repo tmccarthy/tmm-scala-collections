@@ -1,10 +1,10 @@
 package au.id.tmm.collections.cats.instances
 
-import au.id.tmm.collections.cats.instances.nonEmptyDupelessSeq._
 import au.id.tmm.collections.NonEmptyDupelessSeq
+import au.id.tmm.collections.cats.instances.nonEmptyDupelessSeq._
 import cats.kernel.Semigroup
-import org.scalatest.flatspec.AnyFlatSpec
 import cats.syntax.show.toShow
+import org.scalatest.flatspec.AnyFlatSpec
 
 class NonEmptyDupelessSeqInstancesSpec extends AnyFlatSpec {
 

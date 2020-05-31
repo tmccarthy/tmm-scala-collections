@@ -1,8 +1,8 @@
 package au.id.tmm.collections.cats.instances
 
-import cats.syntax.monoid._
-import au.id.tmm.collections.cats.instances.dupelessSeq._
 import au.id.tmm.collections.DupelessSeq
+import au.id.tmm.collections.cats.instances.dupelessSeq._
+import cats.syntax.monoid._
 import org.scalatest.flatspec.AnyFlatSpec
 
 class DupelessSeqInstancesSpec extends AnyFlatSpec {

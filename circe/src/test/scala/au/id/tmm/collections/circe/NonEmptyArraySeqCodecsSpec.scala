@@ -4,9 +4,9 @@ import au.id.tmm.utilities.testing.syntax._
 import au.id.tmm.collections.NonEmptyArraySeq
 import io.circe.Json
 import io.circe.syntax.EncoderOps
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class NonEmptyArraySeqCodecsSpec extends FlatSpec {
+class NonEmptyArraySeqCodecsSpec extends AnyFlatSpec {
   "the nonEmptyArraySeqEncoder" should "encode a dupeless seq" in {
     assert(NonEmptyArraySeq.of(1, 2, 3).asJson === Json.arr(1.asJson, 2.asJson, 3.asJson))
   }

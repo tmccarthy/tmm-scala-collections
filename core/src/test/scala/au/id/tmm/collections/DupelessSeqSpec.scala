@@ -1,10 +1,10 @@
 package au.id.tmm.collections
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.collection.immutable.ArraySeq
 
-class DupelessSeqSpec extends FlatSpec {
+class DupelessSeqSpec extends AnyFlatSpec {
 
   "a DupelessSeq" should "retain the order of the earliest element when initialised" in {
     assert(DupelessSeq(1, 2, 3, 1).toList === List(1, 2, 3))

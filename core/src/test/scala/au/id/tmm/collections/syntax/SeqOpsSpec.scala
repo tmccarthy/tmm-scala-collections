@@ -1,8 +1,8 @@
 package au.id.tmm.collections.syntax
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class SeqOpsSpec extends FlatSpec {
+class SeqOpsSpec extends AnyFlatSpec {
 
   "finding every nth element" should "return empty for an empty seq" in {
     assert(List.empty[Int].everyNth(5) === List.empty)

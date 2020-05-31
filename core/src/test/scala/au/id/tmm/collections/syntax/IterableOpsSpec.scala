@@ -1,9 +1,9 @@
 package au.id.tmm.collections.syntax
 
 import au.id.tmm.utilities.testing.syntax._
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class IterableOpsSpec extends FlatSpec {
+class IterableOpsSpec extends AnyFlatSpec {
 
   "at most one" should "return None for an empty iterable" in {
     assert(List.empty[Int].atMostOne.get === None)

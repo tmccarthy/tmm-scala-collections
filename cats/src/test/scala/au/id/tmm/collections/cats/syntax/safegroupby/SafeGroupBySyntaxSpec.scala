@@ -1,8 +1,8 @@
 package au.id.tmm.collections.cats.syntax.safegroupby
 
 import au.id.tmm.collections.NonEmptySet
-import au.id.tmm.collections.syntax.toSafeGroupByOps
 import au.id.tmm.collections.cats.instances.list._
+import au.id.tmm.collections.syntax.toSafeGroupByOps
 import cats.data.NonEmptyList
 import org.scalatest.flatspec.AnyFlatSpec
 

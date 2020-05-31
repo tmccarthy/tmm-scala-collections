@@ -2,9 +2,9 @@ package au.id.tmm.collections
 
 import java.time.LocalDate
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class FlyweightSpec extends FlatSpec {
+class FlyweightSpec extends AnyFlatSpec {
 
   private val testFlyweight = Flyweight(LocalDate.parse)
 

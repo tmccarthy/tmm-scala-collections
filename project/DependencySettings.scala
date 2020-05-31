@@ -7,7 +7,7 @@ object DependencySettings {
   private val silencerVersion = "1.7.0"
 
   val commonDependencies: Seq[Def.Setting[Seq[ModuleID]]] = Seq(
-    libraryDependencies += "org.scalatest"       %% "scalatest"         % "3.0.8"         % Test, // TODO upgrade this
+    libraryDependencies += "org.scalatest"       %% "scalatest"         % "3.2.0-M4"      % Test,
     libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing" % "0.4.7"         % Test,
     libraryDependencies += "com.github.ghik"     %% "silencer-lib"      % silencerVersion % Provided cross CrossVersion.full,
 

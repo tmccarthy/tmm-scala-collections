@@ -2,9 +2,9 @@ package au.id.tmm.collections.classes
 
 import au.id.tmm.collections.NonEmptySet
 import au.id.tmm.collections.syntax.toSafeGroupByOps
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class SafeGroupBySpec extends FlatSpec {
+class SafeGroupBySpec extends AnyFlatSpec {
 
   "safe group by for a Set" should "work" in {
     val set = Set(

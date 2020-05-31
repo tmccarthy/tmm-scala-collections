@@ -1,8 +1,9 @@
 package au.id.tmm.collections.syntax
 
-import org.scalatest.{FlatSpec, OneInstancePerTest}
+import org.scalatest.OneInstancePerTest
+import org.scalatest.flatspec.AnyFlatSpec
 
-class IteratorOpsSpec extends FlatSpec with OneInstancePerTest {
+class IteratorOpsSpec extends AnyFlatSpec with OneInstancePerTest {
 
   private val data     = List("the", "quick", "brown", "fox")
   private val iterator = data.iterator

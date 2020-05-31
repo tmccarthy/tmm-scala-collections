@@ -3,9 +3,9 @@ package au.id.tmm.collections.circe
 import au.id.tmm.collections.DupelessSeq
 import io.circe.Json
 import io.circe.syntax.EncoderOps
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class DupelessSeqCodecsSpec extends FlatSpec {
+class DupelessSeqCodecsSpec extends AnyFlatSpec {
 
   "the dupelessSeqEncoder" should "encode a dupeless seq" in {
     assert(DupelessSeq(1, 2, 3).asJson === Json.arr(1.asJson, 2.asJson, 3.asJson))

@@ -1,8 +1,8 @@
 package au.id.tmm.collections
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class NonEmptySetSpec extends FlatSpec {
+class NonEmptySetSpec extends AnyFlatSpec {
 
   "A non-empty set" can "be constructed with a single element" in {
     assert(NonEmptySet.one(1).toList === List(1))

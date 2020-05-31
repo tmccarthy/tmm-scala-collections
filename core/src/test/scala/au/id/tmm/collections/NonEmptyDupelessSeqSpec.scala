@@ -1,10 +1,10 @@
 package au.id.tmm.collections
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.collection.immutable.ArraySeq
 
-class NonEmptyDupelessSeqSpec extends FlatSpec {
+class NonEmptyDupelessSeqSpec extends AnyFlatSpec {
 
   "a non-empty dupelessSeq" can "be flattened" in {
     val neds: NonEmptyDupelessSeq[NonEmptyDupelessSeq[Int]] = NonEmptyDupelessSeq.of(
