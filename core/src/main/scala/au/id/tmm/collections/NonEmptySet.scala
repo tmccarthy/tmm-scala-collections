@@ -9,13 +9,11 @@ import scala.collection.mutable
   */
 final class NonEmptySet[A] private (val underlying: Set[A])
     extends (A => Boolean)
-    // format: off
     with NonEmptyIterableOps[
-      ({ type λ[+ ⍺] = Set[⍺ @uncheckedVariance] })#λ,
-      ({ type λ[+ ⍺] = NonEmptySet[⍺ @uncheckedVariance] })#λ,
+      NonEmptySet.CovariantSet,
+      NonEmptySet.Covariant,
       A @uncheckedVariance,
     ] {
-  // format: on
 
   override protected def constructor[X](cx: Set[X]): NonEmptySet[X] = new NonEmptySet[X](cx)
 
@@ -73,6 +71,9 @@ final class NonEmptySet[A] private (val underlying: Set[A])
 }
 
 object NonEmptySet extends NonEmptyIterableCompanion[Set, NonEmptySet] {
+
+  type Covariant[+A]    = NonEmptySet[A @uncheckedVariance]
+  type CovariantSet[+A] = Set[A @uncheckedVariance]
 
   override protected[collections] def className: String = "NonEmptySet"
 
