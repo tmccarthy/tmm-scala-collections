@@ -22,7 +22,7 @@ final case class ProjectSettingsHelper private (
 
   def settingsForBuild = {
     List(
-      Keys.aggregate in releaseEarly := false, // Workaround for https://github.com/scalacenter/sbt-release-early/issues/30
+      releaseEarly / Keys.aggregate := false, // Workaround for https://github.com/scalacenter/sbt-release-early/issues/30
       Sonatype.SonatypeKeys.sonatypeProfileName := sonatypeProfile,
     ) ++ sbt.inThisBuild(
       List(
@@ -46,19 +46,21 @@ final case class ProjectSettingsHelper private (
         pgpSecretRing := file("/tmp/secrets/secring.gpg"),
         releaseEarlyWith := SonatypePublisher,
         releaseEarlyEnableInstantReleases := false,
+
+        scalaVersion := primaryScalaVersion,
+        crossScalaVersions := Seq(primaryScalaVersion) ++ otherScalaVersions,
       )
     )
   }
 
   def settingsForRootProject = Seq(
-    skip in publish := true,
+    publish / skip := true,
     name := baseProjectName,
+    crossScalaVersions := Nil,
   )
 
   def settingsForSubprojectCalled(name: String) = Seq(
     Keys.name := s"$baseProjectName-$name",
-    scalaVersion := primaryScalaVersion,
-    crossScalaVersions := Seq(primaryScalaVersion) ++ otherScalaVersions,
     ScalacSettings.scalacSetting,
     publishConfiguration := publishConfiguration.value.withOverwrite(true),
     publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
