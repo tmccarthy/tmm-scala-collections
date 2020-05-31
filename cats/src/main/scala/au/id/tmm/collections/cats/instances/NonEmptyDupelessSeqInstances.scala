@@ -16,39 +16,40 @@ trait NonEmptyDupelessSeqInstances {
   implicit def catsStdSemigroupForNonEmptyDupelessSeq[A]: Band[NonEmptyDupelessSeq[A]] = _ concat _
 
   implicit val catsStdInstancesForNonEmptyDupelessSeq
-    : SemigroupK[NonEmptyDupelessSeq] with NonEmptyTraverse[NonEmptyDupelessSeq] = new SemigroupK[NonEmptyDupelessSeq]
-  with NonEmptyTraverse[NonEmptyDupelessSeq] {
-    override def combineK[A](x: NonEmptyDupelessSeq[A], y: NonEmptyDupelessSeq[A]): NonEmptyDupelessSeq[A] =
-      x concat y
+    : SemigroupK[NonEmptyDupelessSeq] with NonEmptyTraverse[NonEmptyDupelessSeq] =
+    new SemigroupK[NonEmptyDupelessSeq] with NonEmptyTraverse[NonEmptyDupelessSeq] {
+      override def combineK[A](x: NonEmptyDupelessSeq[A], y: NonEmptyDupelessSeq[A]): NonEmptyDupelessSeq[A] =
+        x concat y
 
-    override def nonEmptyTraverse[G[_], A, B](
-      fa: NonEmptyDupelessSeq[A],
-    )(
-      f: A => G[B],
-    )(implicit
-      G: Apply[G],
-    ): G[NonEmptyDupelessSeq[B]] =
-      reduceRightTo[A, G[NonEmptyDupelessSeq[B]]](fa)(a =>
-        G.map[B, NonEmptyDupelessSeq[B]](f(a))(NonEmptyDupelessSeq.one)) {
-        case (a, evalGNesB) => {
-          G.map2Eval[B, NonEmptyDupelessSeq[B], NonEmptyDupelessSeq[B]](f(a), evalGNesB) {
-            case (b, nesB) => nesB.prepended(b)
+      override def nonEmptyTraverse[G[_], A, B](
+        fa: NonEmptyDupelessSeq[A],
+      )(
+        f: A => G[B],
+      )(implicit
+        G: Apply[G],
+      ): G[NonEmptyDupelessSeq[B]] =
+        reduceRightTo[A, G[NonEmptyDupelessSeq[B]]](fa)(a =>
+          G.map[B, NonEmptyDupelessSeq[B]](f(a))(NonEmptyDupelessSeq.one),
+        ) {
+          case (a, evalGNesB) => {
+            G.map2Eval[B, NonEmptyDupelessSeq[B], NonEmptyDupelessSeq[B]](f(a), evalGNesB) {
+              case (b, nesB) => nesB.prepended(b)
+            }
           }
-        }
-      }.value
+        }.value
 
-    override def reduceLeftTo[A, B](fa: NonEmptyDupelessSeq[A])(f: A => B)(g: (B, A) => B): B =
-      fa.tail.foldLeft[B](f(fa.head))(g)
+      override def reduceLeftTo[A, B](fa: NonEmptyDupelessSeq[A])(f: A => B)(g: (B, A) => B): B =
+        fa.tail.foldLeft[B](f(fa.head))(g)
 
-    override def reduceRightTo[A, B](fa: NonEmptyDupelessSeq[A])(f: A => B)(g: (A, Eval[B]) => Eval[B]): Eval[B] =
-      fa.init.foldRight[Eval[B]](Eval.now[A](fa.last).map(f))(g)
+      override def reduceRightTo[A, B](fa: NonEmptyDupelessSeq[A])(f: A => B)(g: (A, Eval[B]) => Eval[B]): Eval[B] =
+        fa.init.foldRight[Eval[B]](Eval.now[A](fa.last).map(f))(g)
 
-    override def foldLeft[A, B](fa: NonEmptyDupelessSeq[A], b: B)(f: (B, A) => B): B =
-      fa.foldLeft(b)(f)
+      override def foldLeft[A, B](fa: NonEmptyDupelessSeq[A], b: B)(f: (B, A) => B): B =
+        fa.foldLeft(b)(f)
 
-    override def foldRight[A, B](fa: NonEmptyDupelessSeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-      fa.foldRight(lb)(f)
-  }
+      override def foldRight[A, B](fa: NonEmptyDupelessSeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
+        fa.foldRight(lb)(f)
+    }
 
   object unlawful {
     import au.id.tmm.collections.cats.instances.dupelessSeq.unlawful._

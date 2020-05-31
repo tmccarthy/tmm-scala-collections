@@ -15,6 +15,7 @@ trait NonEmptyArraySeqCodecs {
   implicit def nonEmptyArraySeqDecoder[A : Decoder]: Decoder[NonEmptyArraySeq[A]] =
     NonEmptyCollectionCodecs.decoderFor[ArraySeq, NonEmptyArraySeq, A](
       "NonEmptyArraySeq",
-      NonEmptyArraySeq.fromArraySeq)
+      NonEmptyArraySeq.fromArraySeq,
+    )
 
 }

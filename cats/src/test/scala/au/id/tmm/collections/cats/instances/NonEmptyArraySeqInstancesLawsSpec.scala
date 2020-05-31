@@ -19,7 +19,8 @@ class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
   checkAll("Align for NonEmptyArraySeq", AlignTests[NonEmptyArraySeq].align[Int, Int, Int, Int])
   checkAll(
     "NonEmptyTraverse for NonEmptyArraySeq",
-    NonEmptyTraverseTests[NonEmptyArraySeq].nonEmptyTraverse[Option, Int, Int, Int, Int, Option, Validated[Unit, *]])
+    NonEmptyTraverseTests[NonEmptyArraySeq].nonEmptyTraverse[Option, Int, Int, Int, Int, Option, Validated[Unit, *]],
+  )
   checkAll("Semigroup for NonEmptyArraySeq", SemigroupTests[NonEmptyArraySeq[Int]].semigroup)
 
   override protected val ignoredTestNames: Set[String] = Set(

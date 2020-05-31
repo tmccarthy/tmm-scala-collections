@@ -21,7 +21,8 @@ class NonEmptyArraySeqCodecsSpec extends FlatSpec {
         .arr()
         .as[NonEmptyArraySeq[Int]]
         .leftGet
-        .message === "Empty array cannot be decoded to NonEmptyArraySeq")
+        .message === "Empty array cannot be decoded to NonEmptyArraySeq",
+    )
   }
 
 }

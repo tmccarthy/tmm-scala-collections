@@ -24,8 +24,10 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
   implicit val catsStdInstancesForTmmUtilsNonEmptyArraySeq: NonEmptyTraverse[NonEmptyArraySeq]
     with Bimonad[NonEmptyArraySeq]
     with SemigroupK[NonEmptyArraySeq]
-    with Align[NonEmptyArraySeq] = new NonEmptyTraverse[NonEmptyArraySeq] with Bimonad[NonEmptyArraySeq]
-  with SemigroupK[NonEmptyArraySeq] with Align[NonEmptyArraySeq] {
+    with Align[NonEmptyArraySeq] = new NonEmptyTraverse[NonEmptyArraySeq]
+    with Bimonad[NonEmptyArraySeq]
+    with SemigroupK[NonEmptyArraySeq]
+    with Align[NonEmptyArraySeq] {
     override def nonEmptyTraverse[G[_], A, B](
       fa: NonEmptyArraySeq[A],
     )(
@@ -34,7 +36,8 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
       G: Apply[G],
     ): G[NonEmptyArraySeq[B]] =
       reduceRightTo[A, G[NonEmptyArraySeq[B]]](fa)(a =>
-        G.map[B, NonEmptyArraySeq[B]](f(a))(NonEmptyArraySeq.untagged.one)) {
+        G.map[B, NonEmptyArraySeq[B]](f(a))(NonEmptyArraySeq.untagged.one),
+      ) {
         case (a, evalGNesB) => {
           G.map2Eval[B, NonEmptyArraySeq[B], NonEmptyArraySeq[B]](f(a), evalGNesB) {
             case (b, nesB) => nesB.prepended(b)
@@ -64,7 +67,8 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
 
     override def coflatMap[A, B](fa: NonEmptyArraySeq[A])(f: NonEmptyArraySeq[A] => B): NonEmptyArraySeq[B] =
       NonEmptyArraySeq.untagged.fromArraySeqUnsafe(
-        CoflatMap[ArraySeq].coflatMap(fa.underlying)(f.compose(NonEmptyArraySeq.untagged.fromArraySeqUnsafe[A])))
+        CoflatMap[ArraySeq].coflatMap(fa.underlying)(f.compose(NonEmptyArraySeq.untagged.fromArraySeqUnsafe[A])),
+      )
 
     override def reduceLeftTo[A, B](fa: NonEmptyArraySeq[A])(f: A => B)(g: (B, A) => B): B =
       fa.tail.foldLeft[B](f(fa.head))(g)

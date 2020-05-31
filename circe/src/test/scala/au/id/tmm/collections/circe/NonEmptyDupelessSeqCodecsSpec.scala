@@ -14,7 +14,8 @@ class NonEmptyDupelessSeqCodecsSpec extends FlatSpec {
 
   "the nonEmptyDupelessSeqDecoder" should "decode an array" in {
     assert(
-      Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyDupelessSeq[Int]] === Right(NonEmptyDupelessSeq.of(1, 2, 3)))
+      Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyDupelessSeq[Int]] === Right(NonEmptyDupelessSeq.of(1, 2, 3)),
+    )
   }
 
   it should "silently drop duplicates when decoding" in {
@@ -27,7 +28,8 @@ class NonEmptyDupelessSeqCodecsSpec extends FlatSpec {
         .arr()
         .as[NonEmptyDupelessSeq[Int]]
         .leftGet
-        .message === "Empty array cannot be decoded to NonEmptyDupelessSeq")
+        .message === "Empty array cannot be decoded to NonEmptyDupelessSeq",
+    )
   }
 
 }

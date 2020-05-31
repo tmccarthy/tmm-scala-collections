@@ -13,11 +13,12 @@ final class NonEmptyArraySeq[+A] private (val underlying: ArraySeq[A])
 
   override def companion: NonEmptyIterableCompanion[ArraySeq, NonEmptyArraySeq] = NonEmptyArraySeq.untagged
 
-  override def equals(other: Any): Boolean = other match {
-    case that: NonEmptyArraySeq[_] =>
-      this.underlying == that.underlying
-    case _ => false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: NonEmptyArraySeq[_] =>
+        this.underlying == that.underlying
+      case _ => false
+    }
 
   override def hashCode(): Int = underlying.hashCode()
 
@@ -54,10 +55,11 @@ object NonEmptyArraySeq {
 
   def fromArraySeqUnsafe[A](arraySeq: ArraySeq[A]): NonEmptyArraySeq[A] = untagged.fromArraySeqUnsafe(arraySeq)
 
-  def fromIterable[A : ClassTag](iterable: Iterable[A]): Option[NonEmptyArraySeq[A]] = iterable match {
-    case arraySeq: ArraySeq[A] => fromArraySeq[A](arraySeq)
-    case _                     => fromArraySeq(ArraySeq.newBuilder[A].addAll(iterable).result())
-  }
+  def fromIterable[A : ClassTag](iterable: Iterable[A]): Option[NonEmptyArraySeq[A]] =
+    iterable match {
+      case arraySeq: ArraySeq[A] => fromArraySeq[A](arraySeq)
+      case _                     => fromArraySeq(ArraySeq.newBuilder[A].addAll(iterable).result())
+    }
 
   def fromIterableUnsafe[A : ClassTag](iterable: Iterable[A]): NonEmptyArraySeq[A] =
     fromIterable[A](iterable).getOrElse(

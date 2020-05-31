@@ -11,6 +11,7 @@ trait NonEmptyDupelessSeqCodecs {
   implicit def nonEmptyDupelessSeqDecoder[A : Decoder]: Decoder[NonEmptyDupelessSeq[A]] =
     NonEmptyCollectionCodecs.decoderFor[DupelessSeq, NonEmptyDupelessSeq, A](
       "NonEmptyDupelessSeq",
-      NonEmptyDupelessSeq.fromDupelessSeq)
+      NonEmptyDupelessSeq.fromDupelessSeq,
+    )
 
 }

@@ -21,11 +21,12 @@ class NonEmptyDupelessSeq[+A] private (val underlying: DupelessSeq[A])
 
   def toArraySeq: ArraySeq[A] = underlying.toArraySeq
 
-  override def equals(other: Any): Boolean = other match {
-    case that: NonEmptyDupelessSeq[_] =>
-      this.underlying == that.underlying
-    case _ => false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: NonEmptyDupelessSeq[_] =>
+        this.underlying == that.underlying
+      case _ => false
+    }
 
   override def hashCode(): Int = underlying.hashCode()
 

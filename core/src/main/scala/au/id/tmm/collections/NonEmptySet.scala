@@ -61,11 +61,12 @@ final class NonEmptySet[A] private (val underlying: Set[A])
 
   override def apply(a: A): Boolean = contains(a)
 
-  override def equals(other: Any): Boolean = other match {
-    case that: NonEmptySet[_] =>
-      this.underlying == that.underlying
-    case _ => false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: NonEmptySet[_] =>
+        this.underlying == that.underlying
+      case _ => false
+    }
 
   override def hashCode(): Int = underlying.hashCode()
 

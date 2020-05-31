@@ -104,13 +104,15 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
   ): NEC[(A1, B)] =
     constructor(underlying.zipAll(that, thisElem, thatElem))
 
-  def unzip[A1, A2](implicit asPair: A <:< (A1, A2)): (NEC[A1], NEC[A2]) = underlying.unzip match {
-    case (l, r) => (constructor(l), constructor(r))
-  }
+  def unzip[A1, A2](implicit asPair: A <:< (A1, A2)): (NEC[A1], NEC[A2]) =
+    underlying.unzip match {
+      case (l, r) => (constructor(l), constructor(r))
+    }
 
-  def unzip3[A1, A2, A3](implicit asTriple: A <:< (A1, A2, A3)): (NEC[A1], NEC[A2], NEC[A3]) = underlying.unzip3 match {
-    case (l, c, r) => (constructor(l), constructor(c), constructor(r))
-  }
+  def unzip3[A1, A2, A3](implicit asTriple: A <:< (A1, A2, A3)): (NEC[A1], NEC[A2], NEC[A3]) =
+    underlying.unzip3 match {
+      case (l, c, r) => (constructor(l), constructor(c), constructor(r))
+    }
 
   def tails: Iterator[C[A]] = underlying.tails
 

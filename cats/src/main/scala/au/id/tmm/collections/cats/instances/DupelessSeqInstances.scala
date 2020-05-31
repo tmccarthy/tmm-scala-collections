@@ -10,19 +10,21 @@ import scala.collection.mutable
 
 trait DupelessSeqInstances extends DupelessSeqInstances1 {
 
-  implicit def catsStdHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] = new Hash[DupelessSeq[A]] {
-    override def hash(x: DupelessSeq[A]): Int                       = Hash.hash((x.toArraySeq, x.toSet))
-    override def eqv(x: DupelessSeq[A], y: DupelessSeq[A]): Boolean = x == y
-  }
+  implicit def catsStdHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] =
+    new Hash[DupelessSeq[A]] {
+      override def hash(x: DupelessSeq[A]): Int                       = Hash.hash((x.toArraySeq, x.toSet))
+      override def eqv(x: DupelessSeq[A], y: DupelessSeq[A]): Boolean = x == y
+    }
 
   implicit def catsStdShowForDupelessSeq[A : Show]: Show[DupelessSeq[A]] =
     s => s.iterator.map(Show[A].show).mkString("DupelessSeq(", ", ", ")")
 
-  implicit def catsStdMonoidForDupelessSeq[A]: Monoid[DupelessSeq[A]] = new Monoid[DupelessSeq[A]] {
-    override def empty: DupelessSeq[A] = DupelessSeq.empty
+  implicit def catsStdMonoidForDupelessSeq[A]: Monoid[DupelessSeq[A]] =
+    new Monoid[DupelessSeq[A]] {
+      override def empty: DupelessSeq[A] = DupelessSeq.empty
 
-    override def combine(x: DupelessSeq[A], y: DupelessSeq[A]): DupelessSeq[A] = x.appendedAll(y)
-  }
+      override def combine(x: DupelessSeq[A], y: DupelessSeq[A]): DupelessSeq[A] = x.appendedAll(y)
+    }
 
   implicit val catsStdInstancesForDupelessSeq: MonoidK[DupelessSeq] with Traverse[DupelessSeq] =
     new MonoidK[DupelessSeq] with Traverse[DupelessSeq] {

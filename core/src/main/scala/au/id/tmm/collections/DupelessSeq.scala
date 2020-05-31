@@ -23,10 +23,11 @@ class DupelessSeq[+A] private (private val iterationOrder: ArraySeq[A], private 
 
   override def apply(idx: Int): A = iterationOrder(idx)
 
-  override def reverse: DupelessSeq[A] = new DupelessSeq(
-    iterationOrder = this.iterationOrder.reverse,
-    elements = this.elements,
-  )
+  override def reverse: DupelessSeq[A] =
+    new DupelessSeq(
+      iterationOrder = this.iterationOrder.reverse,
+      elements = this.elements,
+    )
 
   override def reverseIterator: Iterator[A] = this.iterationOrder.reverseIterator
 
@@ -94,10 +95,11 @@ class DupelessSeq[+A] private (private val iterationOrder: ArraySeq[A], private 
       this appended elem
     }
 
-  override def sorted[B >: A](implicit ord: Ordering[B]): DupelessSeq[A] = new DupelessSeq(
-    iterationOrder = this.iterationOrder.sorted(ord),
-    elements = this.elements,
-  )
+  override def sorted[B >: A](implicit ord: Ordering[B]): DupelessSeq[A] =
+    new DupelessSeq(
+      iterationOrder = this.iterationOrder.sorted(ord),
+      elements = this.elements,
+    )
 
   def -[A1 >: A](elem: A1): DupelessSeq[A] =
     if (this.contains(elem)) {
@@ -119,14 +121,15 @@ class DupelessSeq[+A] private (private val iterationOrder: ArraySeq[A], private 
 
   override def canEqual(other: Any): Boolean = other.isInstanceOf[DupelessSeq[_]]
 
-  override def equals(other: Any): Boolean = other match {
-    case that: DupelessSeq[_] =>
-      super.equals(that) &&
-        (that canEqual this) &&
-        iterationOrder == that.iterationOrder &&
-        elements == that.elements
-    case _ => false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: DupelessSeq[_] =>
+        super.equals(that) &&
+          (that canEqual this) &&
+          iterationOrder == that.iterationOrder &&
+          elements == that.elements
+      case _ => false
+    }
 
   override def hashCode(): Int = (iterationOrder, elements).hashCode()
 }
@@ -174,9 +177,10 @@ object DupelessSeq extends SeqFactory[DupelessSeq] {
     }
   }
 
-  override def from[A](source: IterableOnce[A]): DupelessSeq[A] = source match {
-    case set: Set[A] => new DupelessSeq[A](set.to(ArraySeq.untagged), set)
-    case i           => newBuilder.addAll(i).result()
-  }
+  override def from[A](source: IterableOnce[A]): DupelessSeq[A] =
+    source match {
+      case set: Set[A] => new DupelessSeq[A](set.to(ArraySeq.untagged), set)
+      case i           => newBuilder.addAll(i).result()
+    }
 
 }
