@@ -14,6 +14,7 @@ lazy val root = project
   )
 
 val catsVersion = "2.2.0-M2"
+val circeVersion = "0.13.0"
 
 lazy val core = project
   .in(file("core"))
@@ -41,8 +42,9 @@ lazy val circe = project
   .in(file("circe"))
   .settings(settingsHelper.settingsForSubprojectCalled("circe"))
   .settings(
-    libraryDependencies += "io.circe" %% "circe-core" % "0.13.0",
+    libraryDependencies += "io.circe" %% "circe-core"    % circeVersion,
+    libraryDependencies += "io.circe" %% "circe-testing" % circeVersion % Test
   )
-  .dependsOn(core, scalaCheck % "compile->test")
+  .dependsOn(core, scalaCheck % "compile->test", cats % "compile->test")
 
 addCommandAlias("check", ";+test;scalafmtCheckAll")
