@@ -232,4 +232,21 @@ trait NonEmptyIterableCompanion[C[X] <: IterableOps[X, C, C[X]], NEC[_]] {
   def fromCons[A](cons: ::[A]): NEC[A] =
     fromHeadTail(cons.head, cons.tail)
 
+  def unsafeBuilder[A]: mutable.Builder[A, NEC[A]] =
+    new mutable.Builder[A, NEC[A]] {
+      private val underlyingBuilder: mutable.Builder[A, C[A]] = newUnderlyingBuilder[A]
+      override def clear(): Unit                              = underlyingBuilder.clear()
+      override def result(): NEC[A]                           = fromUnderlyingUnsafe(underlyingBuilder.result())
+      override def addOne(elem: A): this.type = {
+        underlyingBuilder.addOne(elem)
+        this
+      }
+      override def addAll(xs: IterableOnce[A]): this.type = {
+        underlyingBuilder.addAll(xs)
+        this
+      }
+      override def sizeHint(size: Int): Unit = underlyingBuilder.sizeHint(size)
+      override def knownSize: Int            = underlyingBuilder.knownSize
+    }
+
 }
