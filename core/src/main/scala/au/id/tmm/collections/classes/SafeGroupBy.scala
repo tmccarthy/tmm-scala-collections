@@ -4,6 +4,7 @@ import au.id.tmm.collections.{DupelessSeq, NonEmptyDupelessSeq, NonEmptyIterable
 
 import scala.collection.{IterableOps, mutable}
 
+// TODO these should return NonEmptyMap
 trait SafeGroupBy[C[_], NEC[_]] {
 
   def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): Map[K, NEC[V]]
