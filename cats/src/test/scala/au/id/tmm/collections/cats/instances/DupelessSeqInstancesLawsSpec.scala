@@ -3,6 +3,7 @@ package au.id.tmm.collections.cats.instances
 import au.id.tmm.collections.DupelessSeq
 import au.id.tmm.collections.cats.instances.dupelessSeq._
 import au.id.tmm.collections.cats.instances.dupelessSeq.unlawful._
+import au.id.tmm.collections.scalacheck.dupelessSeq._
 import cats.data.Validated
 import cats.kernel.laws.discipline.{BandTests, HashTests, MonoidTests}
 import cats.laws.discipline.arbitrary._

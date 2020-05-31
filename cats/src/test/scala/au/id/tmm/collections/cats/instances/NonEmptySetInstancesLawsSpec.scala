@@ -1,8 +1,8 @@
 package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptySet
-import au.id.tmm.collections.cats.instances.ScalacheckInstances.{arbitraryNonEmptySet, _}
 import au.id.tmm.collections.cats.instances.nonEmptySet._
+import au.id.tmm.collections.scalacheck.nonEmptySet._
 import au.id.tmm.utilities.testing.AdHocTestIgnore
 import cats.data.Validated
 import cats.kernel.laws.discipline.{HashTests, SemilatticeTests}

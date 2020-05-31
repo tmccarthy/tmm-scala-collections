@@ -1,8 +1,8 @@
 package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptyDupelessSeq
-import au.id.tmm.collections.cats.instances.ScalacheckInstances._
 import au.id.tmm.collections.cats.instances.nonEmptyDupelessSeq._
+import au.id.tmm.collections.scalacheck.nonEmptyDupelessSeq._
 import au.id.tmm.utilities.testing.AdHocTestIgnore
 import cats.data.Validated
 import cats.kernel.laws.discipline.{BandTests, HashTests}

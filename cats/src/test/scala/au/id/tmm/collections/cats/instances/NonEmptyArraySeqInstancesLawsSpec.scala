@@ -1,8 +1,8 @@
 package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptyArraySeq
-import au.id.tmm.collections.cats.instances.ScalacheckInstances._
 import au.id.tmm.collections.cats.instances.nonEmptyArraySeq._
+import au.id.tmm.collections.scalacheck.nonEmptyArraySeq._
 import au.id.tmm.utilities.testing.AdHocTestIgnore
 import cats.data.Validated
 import cats.kernel.laws.discipline.{EqTests, HashTests, SemigroupTests}

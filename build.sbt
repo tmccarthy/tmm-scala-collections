@@ -35,7 +35,7 @@ lazy val cats = project
     libraryDependencies += "org.typelevel" %% "cats-testkit"           % catsVersion % Test,
     libraryDependencies += "org.typelevel" %% "cats-testkit-scalatest" % "1.0.1"     % Test,
   )
-  .dependsOn(core)
+  .dependsOn(core, scalaCheck % "compile->test")
 
 lazy val circe = project
   .in(file("circe"))
@@ -43,6 +43,6 @@ lazy val circe = project
   .settings(
     libraryDependencies += "io.circe" %% "circe-core" % "0.13.0",
   )
-  .dependsOn(core)
+  .dependsOn(core, scalaCheck % "compile->test")
 
 addCommandAlias("check", ";+test;scalafmtCheckAll")
