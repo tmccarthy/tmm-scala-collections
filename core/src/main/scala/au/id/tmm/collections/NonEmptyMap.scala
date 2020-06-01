@@ -283,13 +283,13 @@ object NonEmptyMap {
     else
       new NonEmptyMap(map)
 
-  def fromIterable[K, V](iterable: Iterable[(K, V)]): Option[NonEmptyMap[K, V]] = {
+  def fromIterable[K, V](iterable: IterableOnce[(K, V)]): Option[NonEmptyMap[K, V]] = {
     val builder = Map.newBuilder[K, V]
     builder.addAll(iterable)
     fromMap(builder.result())
   }
 
-  def fromIterableUnsafe[K, V](iterable: Iterable[(K, V)]): NonEmptyMap[K, V] =
+  def fromIterableUnsafe[K, V](iterable: IterableOnce[(K, V)]): NonEmptyMap[K, V] =
     fromIterable(iterable).getOrElse(
       throw new IllegalArgumentException("Cannot create NEC from empty set"),
     )

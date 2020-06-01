@@ -189,6 +189,9 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
   def toSeq: Seq[A]                                     = underlying.toSeq
   def toIndexedSeq: IndexedSeq[A]                       = underlying.toIndexedSeq
 
+  def toNonEmptyMap[K, V](implicit ev: A <:< (K, V)): NonEmptyMap[K, V] =
+    NonEmptyMap.fromIterableUnsafe[K, V](underlying.toIterable.asInstanceOf[Iterable[(K, V)]])
+
   def toArray[B >: A](implicit evidence$2: ClassTag[B]): Array[B] = underlying.toArray[B]
 
 }
