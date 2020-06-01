@@ -6,3 +6,4 @@ package object circe
     with DupelessSeqCodecs
     with NonEmptyDupelessSeqCodecs
     with NonEmptyArraySeqCodecs
+    with NonEmptyMapCodecs

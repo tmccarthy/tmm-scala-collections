@@ -6,6 +6,7 @@ package object scalacheck {
   object nonEmptyDupelessSeq extends NonEmptyDupelessSeqScalacheckInstances
   object nonEmptyArraySeq    extends NonEmptyArraySeqScalacheckInstances
   object nonEmptySet         extends NonEmptySetScalacheckInstances
+  object nonEmptyMap         extends NonEmptyMapScalacheckInstances
 
   object all
       extends AnyRef
@@ -13,5 +14,6 @@ package object scalacheck {
       with NonEmptyDupelessSeqScalacheckInstances
       with NonEmptyArraySeqScalacheckInstances
       with NonEmptySetScalacheckInstances
+      with NonEmptyMapScalacheckInstances
 
 }
