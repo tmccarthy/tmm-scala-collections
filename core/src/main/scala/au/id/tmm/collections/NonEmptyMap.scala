@@ -247,7 +247,7 @@ final class NonEmptyMap[K, +V] private (val underlying: Map[K, V])
 
   def toNonEmptySet[B >: (K, V)]: NonEmptySet[B] = NonEmptySet.fromIterableUnsafe(this.underlying)
 
-  override def toString: String = underlying.mkString(s"$NonEmptyMap(", ", ", ")")
+  override def toString: String = underlying.mkString(s"NonEmptyMap(", ", ", ")")
 
   override def equals(other: Any): Boolean =
     other match {

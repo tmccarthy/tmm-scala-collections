@@ -1,7 +1,7 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.NonEmptySet
 import au.id.tmm.collections.syntax.toSafeGroupByOps
+import au.id.tmm.collections.{NonEmptyMap, NonEmptySet}
 import org.scalatest.flatspec.AnyFlatSpec
 
 class SafeGroupBySpec extends AnyFlatSpec {
@@ -13,7 +13,7 @@ class SafeGroupBySpec extends AnyFlatSpec {
       "banana",
     )
 
-    val expectedGrouped = Map(
+    val expectedGrouped = NonEmptyMap.of(
       'a' -> NonEmptySet.of("apple", "apricot"),
       'b' -> NonEmptySet.of("banana"),
     )
