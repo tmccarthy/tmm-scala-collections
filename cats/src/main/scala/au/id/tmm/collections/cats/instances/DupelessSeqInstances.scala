@@ -3,10 +3,9 @@ package au.id.tmm.collections.cats.instances
 import au.id.tmm.collections.DupelessSeq
 import cats.kernel.{Band, Hash, Monoid}
 import cats.syntax.functor.toFunctorOps
-import cats.{Applicative, Eval, Monad, MonoidK, Show, Traverse}
+import cats.{Applicative, Eval, MonoidK, Show, Traverse}
 
 import scala.collection.immutable.ArraySeq
-import scala.collection.mutable
 
 trait DupelessSeqInstances extends DupelessSeqInstances1 {
 
@@ -51,32 +50,11 @@ trait DupelessSeqInstances extends DupelessSeqInstances1 {
       override def algebra[A]: Monoid[DupelessSeq[A]] = catsStdMonoidForDupelessSeq
     }
 
-  object unlawful {
-    implicit val catsUnlawfulInstancesForDupelessSeq: Monad[DupelessSeq] = new Monad[DupelessSeq] {
-      override def flatMap[A, B](fa: DupelessSeq[A])(f: A => DupelessSeq[B]): DupelessSeq[B] =
-        fa.flatMap(f)
-
-      override def tailRecM[A, B](a: A)(f: A => DupelessSeq[Either[A, B]]): DupelessSeq[B] = {
-        val resultBuilder: DupelessSeq.DupelessSeqBuilder[B] = DupelessSeq.newBuilder[B]
-        val aQueue: mutable.Queue[A]                         = mutable.Queue(a)
-
-        while (aQueue.nonEmpty) {
-          f(aQueue.dequeue()) foreach {
-            case Right(b) => resultBuilder.addOne(b)
-            case Left(a)  => aQueue.append(a)
-          }
-        }
-
-        resultBuilder.result()
-      }
-
-      override def pure[A](x: A): DupelessSeq[A] = DupelessSeq(x)
-    }
-  }
-
 }
 
 private[instances] trait DupelessSeqInstances1 {
+
+  // TODO need an Eq here
 
   implicit def catsStdBandForDupelessSeq[A]: Band[DupelessSeq[A]] = _ appendedAll _
 

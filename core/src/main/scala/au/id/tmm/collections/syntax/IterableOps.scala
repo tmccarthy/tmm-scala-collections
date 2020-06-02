@@ -73,3 +73,17 @@ final class IterableOps[C[_], A] private[syntax] (
       .asInstanceOf[Map[K, C[V]]]
 
 }
+
+object IterableOps {
+
+  trait ToIterableOps {
+    implicit def toIterableOps[C[_], A](
+      iterable: C[A],
+    )(implicit
+      buildFrom: BuildFrom[C[A], A, C[A]],
+      ev: C[A] <:< Iterable[A],
+    ): IterableOps[C, A] =
+      new IterableOps[C, A](iterable)
+  }
+
+}

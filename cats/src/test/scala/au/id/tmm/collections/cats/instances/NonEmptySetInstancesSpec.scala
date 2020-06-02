@@ -2,7 +2,7 @@ package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptySet
 import au.id.tmm.collections.cats.instances.nonEmptySet._
-import au.id.tmm.collections.cats.instances.nonEmptySet.unlawful._
+import au.id.tmm.collections.cats.instances.unlawful.nonEmptySet._
 import cats.instances.option.catsStdInstancesForOption
 import cats.syntax.show.toShow
 import cats.syntax.traverse.toTraverseOps

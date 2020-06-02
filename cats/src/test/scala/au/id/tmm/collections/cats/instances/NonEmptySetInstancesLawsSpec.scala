@@ -28,7 +28,7 @@ class NonEmptySetInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
 
   // Unlawful tests below
 
-  import au.id.tmm.collections.cats.instances.nonEmptySet.unlawful._
+  import au.id.tmm.collections.cats.instances.unlawful.nonEmptySet._
 
   private implicit val nonEmptySetIsomorphism: SemigroupalTests.Isomorphisms[NonEmptySet] =
     SemigroupalTests.Isomorphisms.invariant[NonEmptySet]

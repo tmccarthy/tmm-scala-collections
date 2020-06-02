@@ -76,3 +76,11 @@ final class IteratorOps[+A] private[syntax] (iterator: Iterator[A]) {
   }
 
 }
+
+object IteratorOps {
+
+  trait ToIteratorOps {
+    implicit def toIteratorOps[A](iterator: Iterator[A]): IteratorOps[A] = new IteratorOps[A](iterator)
+  }
+
+}
