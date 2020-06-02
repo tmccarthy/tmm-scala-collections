@@ -8,6 +8,7 @@ package object instances {
   object nonEmptyArraySeq    extends NonEmptyArraySeqInstances
   object list                extends ListInstances
   object vector              extends VectorInstances
+  object mapOverKeys         extends MapOverKeysInstances
 
   object all
       extends AnyRef
@@ -17,5 +18,6 @@ package object instances {
       with ListInstances
       with VectorInstances
       with NonEmptyArraySeqInstances
+      with MapOverKeysInstances
 
 }
