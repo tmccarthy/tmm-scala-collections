@@ -24,5 +24,4 @@ trait NonEmptyMapScalacheckInstances {
   implicit def nonEmptyMapScalacheckCogen[K : Cogen, V : Cogen]: Cogen[NonEmptyMap[K, V]] =
     Cogen.it[NonEmptyMap[K, V], (K, V)](_.iterator)
 
-
 }

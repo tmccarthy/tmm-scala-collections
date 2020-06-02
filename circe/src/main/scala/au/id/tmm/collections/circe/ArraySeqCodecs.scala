@@ -5,7 +5,6 @@ import io.circe.{Decoder, Encoder}
 import scala.collection.Factory
 import scala.collection.immutable.ArraySeq
 
-// TODO do these need to be public?
 private[circe] object ArraySeqCodecs {
 
   private implicit def factory[A]: Factory[A, ArraySeq[A]] = ArraySeq.untagged
