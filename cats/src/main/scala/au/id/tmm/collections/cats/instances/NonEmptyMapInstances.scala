@@ -4,7 +4,8 @@ import au.id.tmm.collections.NonEmptyMap
 import cats.data.Ior
 import cats.instances.map._
 import cats.kernel.{CommutativeMonoid, CommutativeSemigroup, Eq, Hash}
-import cats.{Align, CommutativeApplicative, FlatMap, Functor, FunctorFilter, Semigroup, Show, UnorderedTraverse}
+import cats.syntax.functor.toFunctorOps
+import cats.{Align, CommutativeApplicative, Functor, Semigroup, Show, UnorderedTraverse}
 
 trait NonEmptyMapInstances extends NonEmptyMapInstances1 {
 
@@ -26,47 +27,37 @@ trait NonEmptyMapInstances extends NonEmptyMapInstances1 {
 
   implicit def tmmCollectionsStdInstancesForNonEmptyMap[
     K,
-  ]: UnorderedTraverse[NonEmptyMap[K, *]] with FlatMap[NonEmptyMap[K, *]] with Align[NonEmptyMap[K, *]] =
-    new UnorderedTraverse[NonEmptyMap[K, *]] with FlatMap[NonEmptyMap[K, *]] with Align[NonEmptyMap[K, *]] {
+  ]: UnorderedTraverse[NonEmptyMap[K, *]] with Functor[NonEmptyMap[K, *]] with Align[NonEmptyMap[K, *]] =
+    new UnorderedTraverse[NonEmptyMap[K, *]] with Functor[NonEmptyMap[K, *]] with Align[NonEmptyMap[K, *]] {
       override def unorderedTraverse[G[_], A, B](
         sa: NonEmptyMap[K, A],
       )(
         f: A => G[B],
       )(implicit
-        evidence$1: CommutativeApplicative[G],
-      ): G[NonEmptyMap[K, B]] = ???
-
-      override def flatMap[A, B](fa: NonEmptyMap[K, A])(f: A => NonEmptyMap[K, B]): NonEmptyMap[K, B] =
-        fa.flatMap {
-          case (k, a) => f(a)
-        }
-
-      override def tailRecM[A, B](a: A)(f: A => NonEmptyMap[K, Either[A, B]]): NonEmptyMap[K, B] =
-        NonEmptyMap.fromMapUnsafe(FlatMap[Map[K, *]].tailRecM(a)(f.andThen(_.underlying)))
+        G: CommutativeApplicative[G],
+      ): G[NonEmptyMap[K, B]] =
+        UnorderedTraverse[Map[K, *]]
+          .unorderedTraverse(sa.underlying)(f)
+          .map(NonEmptyMap.fromMapUnsafe)
 
       override def functor: Functor[NonEmptyMap[K, *]] = this
 
-      override def align[A, B](fa: NonEmptyMap[K, A], fb: NonEmptyMap[K, B]): NonEmptyMap[K, Ior[A, B]] = ???
+      override def align[A, B](fa: NonEmptyMap[K, A], fb: NonEmptyMap[K, B]): NonEmptyMap[K, Ior[A, B]] =
+        NonEmptyMap.fromMapUnsafe(Align[Map[K, *]].align(fa.underlying, fb.underlying))
 
       override def unorderedFoldMap[A, B](
         fa: NonEmptyMap[K, A],
       )(
         f: A => B,
       )(implicit
-        evidence$1: CommutativeMonoid[B],
-      ): B = ???
+        monoidB: CommutativeMonoid[B],
+      ): B =
+        UnorderedTraverse[Map[K, *]].unorderedFoldMap(fa.underlying)(f)
 
       override def map[A, B](fa: NonEmptyMap[K, A])(f: A => B): NonEmptyMap[K, B] =
         fa.map {
           case (k, a) => k -> f(a)
         }
-    }
-
-  implicit def tmmCollectionsFunctorFilterForNonEmptyMap[K]: FunctorFilter[NonEmptyMap[K, *]] =
-    new FunctorFilter[NonEmptyMap[K, *]] {
-      override def functor: Functor[NonEmptyMap[K, *]] = tmmCollectionsStdInstancesForNonEmptyMap
-
-      override def mapFilter[V1, V2](fa: NonEmptyMap[K, V1])(f: V1 => Option[V2]): NonEmptyMap[K, V2] = ???
     }
 
   implicit def tmmCollectionsCommutativeSemigroupForNonEmptyMap[
