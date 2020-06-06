@@ -3,7 +3,20 @@ package au.id.tmm.collections.cats.instances
 import au.id.tmm.collections.NonEmptyArraySeq
 import cats.data.Ior
 import cats.kernel.{Eq, Hash, Semigroup}
-import cats.{Align, Applicative, Apply, Bimonad, CoflatMap, Eval, Foldable, Functor, Monad, NonEmptyTraverse, SemigroupK, Show}
+import cats.{
+  Align,
+  Applicative,
+  Apply,
+  Bimonad,
+  CoflatMap,
+  Eval,
+  Foldable,
+  Functor,
+  Monad,
+  NonEmptyTraverse,
+  SemigroupK,
+  Show,
+}
 import cats.instances.arraySeq._
 import cats.syntax.traverse.toTraverseOps
 import cats.syntax.functor.toFunctorOps
@@ -31,10 +44,22 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
     with SemigroupK[NonEmptyArraySeq]
     with Align[NonEmptyArraySeq] {
 
-    override def traverse[G[_], A, B](fa: NonEmptyArraySeq[A])(f: A => G[B])(implicit G: Applicative[G]): G[NonEmptyArraySeq[B]] =
+    override def traverse[G[_], A, B](
+      fa: NonEmptyArraySeq[A],
+    )(
+      f: A => G[B],
+    )(implicit
+      G: Applicative[G],
+    ): G[NonEmptyArraySeq[B]] =
       fa.underlying.traverse(f).map(NonEmptyArraySeq.fromArraySeqUnsafe)
 
-    override def nonEmptyTraverse[G[_], A, B](fa: NonEmptyArraySeq[A])(f: A => G[B])(implicit G: Apply[G]): G[NonEmptyArraySeq[B]] =
+    override def nonEmptyTraverse[G[_], A, B](
+      fa: NonEmptyArraySeq[A],
+    )(
+      f: A => G[B],
+    )(implicit
+      G: Apply[G],
+    ): G[NonEmptyArraySeq[B]] =
       reduceRightTo[A, G[NonEmptyArraySeq[B]]](fa)(a =>
         G.map[B, NonEmptyArraySeq[B]](f(a))(NonEmptyArraySeq.untagged.one),
       ) {
