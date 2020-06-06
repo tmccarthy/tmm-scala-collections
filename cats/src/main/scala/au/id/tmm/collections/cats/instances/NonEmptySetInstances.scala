@@ -7,11 +7,7 @@ import cats.{CommutativeApplicative, Hash, SemigroupK, Show, UnorderedTraverse}
 
 trait NonEmptySetInstances extends NonEmptySetInstances1 {
 
-  implicit def catsStdHashForTmmUtilsNonEmptySet[A : Hash]: Hash[NonEmptySet[A]] =
-    new Hash[NonEmptySet[A]] {
-      override def hash(x: NonEmptySet[A]): Int                       = Hash[Set[A]].hash(x.underlying)
-      override def eqv(x: NonEmptySet[A], y: NonEmptySet[A]): Boolean = Eq[Set[A]].eqv(x.underlying, y.underlying)
-    }
+  implicit def catsStdHashForTmmUtilsNonEmptySet[A : Hash]: Hash[NonEmptySet[A]] = Hash.by(_.underlying)
 
   implicit def catsStdShowForTmmUtilsNonEmptySet[A : Show]: Show[NonEmptySet[A]] =
     s => s.iterator.map(Show[A].show).mkString("NonEmptySet(", ", ", ")")
@@ -20,9 +16,11 @@ trait NonEmptySetInstances extends NonEmptySetInstances1 {
 
 private[instances] trait NonEmptySetInstances1 {
 
-  implicit def catsStdSemilatticeForNonEmptySet[A]: Semilattice[NonEmptySet[A]] = (x, y) => x concat y
+  implicit def tmmUtilsEqForTmmUtilsNonEmptySet[A : Eq]: Eq[NonEmptySet[A]] = Eq.by(_.underlying)
 
-  implicit val catsStdInstancesForNonEmptySet: SemigroupK[NonEmptySet] with UnorderedTraverse[NonEmptySet] =
+  implicit def catsStdSemilatticeForTmmUtilsNonEmptySet[A]: Semilattice[NonEmptySet[A]] = (x, y) => x concat y
+
+  implicit val catsStdInstancesForTmmUtilsNonEmptySet: SemigroupK[NonEmptySet] with UnorderedTraverse[NonEmptySet] =
     new SemigroupK[NonEmptySet] with UnorderedTraverse[NonEmptySet] {
       override def combineK[A](x: NonEmptySet[A], y: NonEmptySet[A]): NonEmptySet[A] = x concat y
 

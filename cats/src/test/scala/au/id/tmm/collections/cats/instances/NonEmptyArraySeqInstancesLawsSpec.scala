@@ -11,8 +11,8 @@ import cats.tests.CatsSuite
 
 class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite {
 
+  checkAll("Eq for NonEmptyArraySeq", EqTests[NonEmptyArraySeq[EqOnlyInt]].eqv)
   checkAll("Hash for NonEmptyArraySeq", HashTests[NonEmptyArraySeq[Int]].hash)
-  checkAll("Eq for NonEmptyArraySeq", EqTests[NonEmptyArraySeq[Int]](catsStdEqForTmmUtilsNonEmptyArraySeq).eqv)
   checkAll("Bimonad for NonEmptyArraySeq", BimonadTests[NonEmptyArraySeq].bimonad[Int, Int, Int])
   checkAll("SemigroupK for NonEmptyArraySeq", SemigroupKTests[NonEmptyArraySeq].semigroupK[Int])
   checkAll("Align for NonEmptyArraySeq", AlignTests[NonEmptyArraySeq].align[Int, Int, Int, Int])

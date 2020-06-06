@@ -25,11 +25,7 @@ import scala.collection.immutable.ArraySeq
 
 trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
 
-  implicit def catsStdHashForTmmUtilsNonEmptyArraySeq[A : Hash]: Hash[NonEmptyArraySeq[A]] =
-    new Hash[NonEmptyArraySeq[A]] {
-      override def hash(x: NonEmptyArraySeq[A]): Int                            = Hash.hash(x.underlying)
-      override def eqv(x: NonEmptyArraySeq[A], y: NonEmptyArraySeq[A]): Boolean = Hash.eqv(x.underlying, y.underlying)
-    }
+  implicit def catsStdHashForTmmUtilsNonEmptyArraySeq[A : Hash]: Hash[NonEmptyArraySeq[A]] = Hash.by(_.underlying)
 
   implicit def catsStdShowForTmmUtilsNonEmptyArraySeq[A : Show]: Show[NonEmptyArraySeq[A]] =
     new Show[NonEmptyArraySeq[A]] {
@@ -110,8 +106,5 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
 }
 
 trait NonEmptyArraySeqInstances1 {
-  implicit def catsStdEqForTmmUtilsNonEmptyArraySeq[A : Eq]: Eq[NonEmptyArraySeq[A]] =
-    new Eq[NonEmptyArraySeq[A]] {
-      override def eqv(x: NonEmptyArraySeq[A], y: NonEmptyArraySeq[A]): Boolean = Eq.eqv(x.underlying, y.underlying)
-    }
+  implicit def catsStdEqForTmmUtilsNonEmptyArraySeq[A : Eq]: Eq[NonEmptyArraySeq[A]] = Eq.by(_.underlying)
 }

@@ -1,7 +1,7 @@
 package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.DupelessSeq
-import cats.kernel.{Band, Hash, Monoid}
+import cats.kernel.{Band, Eq, Hash, Monoid}
 import cats.syntax.functor.toFunctorOps
 import cats.{Applicative, Eval, MonoidK, Show, Traverse}
 
@@ -9,11 +9,7 @@ import scala.collection.immutable.ArraySeq
 
 trait DupelessSeqInstances extends DupelessSeqInstances1 {
 
-  implicit def catsStdHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] =
-    new Hash[DupelessSeq[A]] {
-      override def hash(x: DupelessSeq[A]): Int                       = Hash.hash((x.toArraySeq, x.toSet))
-      override def eqv(x: DupelessSeq[A], y: DupelessSeq[A]): Boolean = x == y
-    }
+  implicit def catsStdHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] = Hash.by(s => (s.toArraySeq, s.toSet))
 
   implicit def catsStdShowForDupelessSeq[A : Show]: Show[DupelessSeq[A]] =
     s => s.iterator.map(Show[A].show).mkString("DupelessSeq(", ", ", ")")
@@ -54,7 +50,7 @@ trait DupelessSeqInstances extends DupelessSeqInstances1 {
 
 private[instances] trait DupelessSeqInstances1 {
 
-  // TODO need an Eq here
+  implicit def tmmUtilsEqForDupelessSeq[A : Eq]: Eq[DupelessSeq[A]] = Eq.by(s => (s.toArraySeq, s.toSet))
 
   implicit def catsStdBandForDupelessSeq[A]: Band[DupelessSeq[A]] = _ appendedAll _
 

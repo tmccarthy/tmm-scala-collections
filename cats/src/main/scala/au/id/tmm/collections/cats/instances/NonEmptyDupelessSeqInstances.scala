@@ -2,13 +2,12 @@ package au.id.tmm.collections.cats.instances
 
 import au.id.tmm.collections.NonEmptyDupelessSeq
 import au.id.tmm.collections.cats.instances.dupelessSeq._
-import cats.kernel.{Band, Hash}
+import cats.kernel.{Band, Eq, Hash}
 import cats.syntax.show.toShow
 import cats.{Apply, Eval, Foldable, NonEmptyTraverse, SemigroupK, Show}
 
-trait NonEmptyDupelessSeqInstances {
+trait NonEmptyDupelessSeqInstances extends NonEmptyDupelessSeqInstances1 {
 
-  // TODO need a low-prio Eq
   implicit def catsStdHashForNonEmptyDupelessSeq[A : Hash]: Hash[NonEmptyDupelessSeq[A]] = Hash.by(_.underlying)
 
   implicit def catsStdShowForNonEmptyDupelessSeq[A : Show]: Show[NonEmptyDupelessSeq[A]] =
@@ -51,5 +50,12 @@ trait NonEmptyDupelessSeqInstances {
       override def foldRight[A, B](fa: NonEmptyDupelessSeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
         Foldable.iterateRight(fa.toIterable, lb)(f)
     }
+
+}
+
+private[instances] trait NonEmptyDupelessSeqInstances1 {
+
+  implicit def tmmUtilsEqForNonEmptyDupelessSeq[A : Eq]: Eq[NonEmptyDupelessSeq[A]] =
+    Eq.by(s => (s.toArraySeq, s.toSet))
 
 }
