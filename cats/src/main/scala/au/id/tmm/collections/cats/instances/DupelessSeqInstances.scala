@@ -9,19 +9,19 @@ import scala.collection.immutable.ArraySeq
 
 trait DupelessSeqInstances extends DupelessSeqInstances1 {
 
-  implicit def catsStdHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] = Hash.by(s => (s.toArraySeq, s.toSet))
+  implicit def tmmUtilsHashForDupelessSeq[A : Hash]: Hash[DupelessSeq[A]] = Hash.by(s => (s.toArraySeq, s.toSet))
 
-  implicit def catsStdShowForDupelessSeq[A : Show]: Show[DupelessSeq[A]] =
+  implicit def tmmUtilsShowForDupelessSeq[A : Show]: Show[DupelessSeq[A]] =
     s => s.iterator.map(Show[A].show).mkString("DupelessSeq(", ", ", ")")
 
-  implicit def catsStdMonoidForDupelessSeq[A]: Monoid[DupelessSeq[A]] =
+  implicit def tmmUtilsMonoidForDupelessSeq[A]: Monoid[DupelessSeq[A]] =
     new Monoid[DupelessSeq[A]] {
       override def empty: DupelessSeq[A] = DupelessSeq.empty
 
       override def combine(x: DupelessSeq[A], y: DupelessSeq[A]): DupelessSeq[A] = x.appendedAll(y)
     }
 
-  implicit val catsStdInstancesForDupelessSeq: MonoidK[DupelessSeq] with Traverse[DupelessSeq] =
+  implicit val tmmUtilsInstancesForDupelessSeq: MonoidK[DupelessSeq] with Traverse[DupelessSeq] =
     new MonoidK[DupelessSeq] with Traverse[DupelessSeq] {
       override def empty[A]: DupelessSeq[A] = DupelessSeq.empty
 
@@ -43,7 +43,7 @@ trait DupelessSeqInstances extends DupelessSeqInstances1 {
       override def combineK[A](x: DupelessSeq[A], y: DupelessSeq[A]): DupelessSeq[A] =
         x concat y
 
-      override def algebra[A]: Monoid[DupelessSeq[A]] = catsStdMonoidForDupelessSeq
+      override def algebra[A]: Monoid[DupelessSeq[A]] = tmmUtilsMonoidForDupelessSeq
     }
 
 }
@@ -52,6 +52,6 @@ private[instances] trait DupelessSeqInstances1 {
 
   implicit def tmmUtilsEqForDupelessSeq[A : Eq]: Eq[DupelessSeq[A]] = Eq.by(s => (s.toArraySeq, s.toSet))
 
-  implicit def catsStdBandForDupelessSeq[A]: Band[DupelessSeq[A]] = _ appendedAll _
+  implicit def tmmUtilsBandForDupelessSeq[A]: Band[DupelessSeq[A]] = _ appendedAll _
 
 }

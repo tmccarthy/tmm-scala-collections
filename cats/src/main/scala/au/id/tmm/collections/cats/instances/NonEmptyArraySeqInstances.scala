@@ -25,14 +25,14 @@ import scala.collection.immutable.ArraySeq
 
 trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
 
-  implicit def catsStdHashForTmmUtilsNonEmptyArraySeq[A : Hash]: Hash[NonEmptyArraySeq[A]] = Hash.by(_.underlying)
+  implicit def tmmUtilsHashForTmmUtilsNonEmptyArraySeq[A : Hash]: Hash[NonEmptyArraySeq[A]] = Hash.by(_.underlying)
 
-  implicit def catsStdShowForTmmUtilsNonEmptyArraySeq[A : Show]: Show[NonEmptyArraySeq[A]] =
+  implicit def tmmUtilsShowForTmmUtilsNonEmptyArraySeq[A : Show]: Show[NonEmptyArraySeq[A]] =
     new Show[NonEmptyArraySeq[A]] {
       override def show(t: NonEmptyArraySeq[A]): String = ???
     }
 
-  implicit val catsStdInstancesForTmmUtilsNonEmptyArraySeq: NonEmptyTraverse[NonEmptyArraySeq]
+  implicit val tmmUtilsInstancesForTmmUtilsNonEmptyArraySeq: NonEmptyTraverse[NonEmptyArraySeq]
     with Bimonad[NonEmptyArraySeq]
     with SemigroupK[NonEmptyArraySeq]
     with Align[NonEmptyArraySeq] = new NonEmptyTraverse[NonEmptyArraySeq]
@@ -100,11 +100,11 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
     override def extract[A](x: NonEmptyArraySeq[A]): A = x.head
   }
 
-  implicit def catsStdSemigroupForTmmUtilsNonEmptyArraySeq[A]: Semigroup[NonEmptyArraySeq[A]] =
-    catsStdInstancesForTmmUtilsNonEmptyArraySeq.algebra[A]
+  implicit def tmmUtilsSemigroupForTmmUtilsNonEmptyArraySeq[A]: Semigroup[NonEmptyArraySeq[A]] =
+    tmmUtilsInstancesForTmmUtilsNonEmptyArraySeq.algebra[A]
 
 }
 
 trait NonEmptyArraySeqInstances1 {
-  implicit def catsStdEqForTmmUtilsNonEmptyArraySeq[A : Eq]: Eq[NonEmptyArraySeq[A]] = Eq.by(_.underlying)
+  implicit def tmmUtilsEqForTmmUtilsNonEmptyArraySeq[A : Eq]: Eq[NonEmptyArraySeq[A]] = Eq.by(_.underlying)
 }

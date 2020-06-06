@@ -23,7 +23,7 @@ class NonEmptyDupelessSeqInstancesLawsSpec extends CatsSuite {
   // Unlawful tests below
 
   private implicit val dupelessSeqIsomorphism: SemigroupalTests.Isomorphisms[NonEmptyDupelessSeq] =
-    SemigroupalTests.Isomorphisms.invariant[NonEmptyDupelessSeq](catsStdInstancesForNonEmptyDupelessSeq)
+    SemigroupalTests.Isomorphisms.invariant[NonEmptyDupelessSeq](tmmUtilsInstancesForNonEmptyDupelessSeq)
 
   checkAll(
     "Monad for NonEmptyDupelessSeq",

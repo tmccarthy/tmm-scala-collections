@@ -8,14 +8,14 @@ import cats.{Apply, Eval, Foldable, NonEmptyTraverse, SemigroupK, Show}
 
 trait NonEmptyDupelessSeqInstances extends NonEmptyDupelessSeqInstances1 {
 
-  implicit def catsStdHashForNonEmptyDupelessSeq[A : Hash]: Hash[NonEmptyDupelessSeq[A]] = Hash.by(_.underlying)
+  implicit def tmmUtilsHashForNonEmptyDupelessSeq[A : Hash]: Hash[NonEmptyDupelessSeq[A]] = Hash.by(_.underlying)
 
-  implicit def catsStdShowForNonEmptyDupelessSeq[A : Show]: Show[NonEmptyDupelessSeq[A]] =
+  implicit def tmmUtilsShowForNonEmptyDupelessSeq[A : Show]: Show[NonEmptyDupelessSeq[A]] =
     s => s"NonEmpty${s.underlying.show}"
 
-  implicit def catsStdSemigroupForNonEmptyDupelessSeq[A]: Band[NonEmptyDupelessSeq[A]] = _ concat _
+  implicit def tmmUtilsSemigroupForNonEmptyDupelessSeq[A]: Band[NonEmptyDupelessSeq[A]] = _ concat _
 
-  implicit val catsStdInstancesForNonEmptyDupelessSeq
+  implicit val tmmUtilsInstancesForNonEmptyDupelessSeq
     : SemigroupK[NonEmptyDupelessSeq] with NonEmptyTraverse[NonEmptyDupelessSeq] =
     new SemigroupK[NonEmptyDupelessSeq] with NonEmptyTraverse[NonEmptyDupelessSeq] {
       override def combineK[A](x: NonEmptyDupelessSeq[A], y: NonEmptyDupelessSeq[A]): NonEmptyDupelessSeq[A] =

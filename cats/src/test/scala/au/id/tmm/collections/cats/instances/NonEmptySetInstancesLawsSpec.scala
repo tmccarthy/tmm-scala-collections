@@ -19,7 +19,7 @@ import cats.tests.CatsSuite
 class NonEmptySetInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
 
   checkAll("Eq for tmmUtils NonEmptySet", EqTests[NonEmptySet[EqOnlyInt]].eqv)
-  checkAll("Hash for tmmUtils NonEmptySet", HashTests[NonEmptySet[Int]](catsStdHashForTmmUtilsNonEmptySet).hash)
+  checkAll("Hash for tmmUtils NonEmptySet", HashTests[NonEmptySet[Int]](tmmUtilsHashForTmmUtilsNonEmptySet).hash)
   checkAll("Semilattice for tmmUtils NonEmptySet", SemilatticeTests[NonEmptySet[Int]].semilattice)
   checkAll("SemigroupK for tmmUtils NonEmptySet", SemigroupKTests[NonEmptySet].semigroupK[Int])
   checkAll(
