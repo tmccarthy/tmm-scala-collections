@@ -6,7 +6,7 @@ import au.id.tmm.collections.scalacheck.nonEmptyMap._
 import cats.data.Validated
 import cats.kernel.laws.discipline.{CommutativeSemigroupTests, EqTests, HashTests, SemigroupTests}
 import cats.laws.discipline.arbitrary._
-import cats.laws.discipline.{AlignTests, FunctorTests, UnorderedTraverseTests}
+import cats.laws.discipline.{AlignTests, FunctorTests, SemigroupKTests, UnorderedTraverseTests}
 import cats.tests.CatsSuite
 
 class NonEmptyMapInstancesLawsSpec extends CatsSuite {
@@ -49,6 +49,11 @@ class NonEmptyMapInstancesLawsSpec extends CatsSuite {
   checkAll(
     "Functor over keys for tmmUtils NonEmptyMap",
     FunctorTests[NonEmptyMap[*, Int]].functor[String, String, String],
+  )
+
+  checkAll(
+    "SemigroupK over keys for tmmUtils NonEmptyMap",
+    SemigroupKTests[NonEmptyMap[*, Int]].semigroupK[String],
   )
 
 }

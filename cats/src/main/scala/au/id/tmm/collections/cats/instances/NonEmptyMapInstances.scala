@@ -5,7 +5,7 @@ import cats.data.Ior
 import cats.instances.map._
 import cats.kernel.{CommutativeMonoid, CommutativeSemigroup, Eq, Hash}
 import cats.syntax.functor.toFunctorOps
-import cats.{Align, CommutativeApplicative, Functor, Semigroup, Show, UnorderedTraverse}
+import cats.{Align, CommutativeApplicative, Functor, MonoidK, Semigroup, SemigroupK, Show, UnorderedTraverse}
 
 trait NonEmptyMapInstances extends NonEmptyMapInstances1 {
 
@@ -92,13 +92,18 @@ private[instances] trait NonEmptyMapInstances1 extends NonEmptyMapInstances2 {
 
 private[instances] trait NonEmptyMapInstances2 {
 
+  import au.id.tmm.collections.cats.instances.mapOverKeys._
+
   implicit def tmmCollectionsFunctorOverKeysForNonEmptyMap[V : Semigroup]: Functor[NonEmptyMap[*, V]] =
     new Functor[NonEmptyMap[*, V]] {
-
-      import au.id.tmm.collections.cats.instances.mapOverKeys._
-
       override def map[A, B](fa: NonEmptyMap[A, V])(f: A => B): NonEmptyMap[B, V] =
         NonEmptyMap.fromMapUnsafe(Functor[Map[*, V]].map(fa.underlying)(f))
+    }
+
+  implicit def tmmCollectionsSemigroupOverKeysForNonEmptyMap[V : Semigroup]: SemigroupK[NonEmptyMap[*, V]] =
+    new SemigroupK[NonEmptyMap[*, V]] {
+      override def combineK[A](x: NonEmptyMap[A, V], y: NonEmptyMap[A, V]): NonEmptyMap[A, V] =
+        NonEmptyMap.fromMapUnsafe(MonoidK[Map[*, V]].combineK(x.underlying, y.underlying))
     }
 
 }
