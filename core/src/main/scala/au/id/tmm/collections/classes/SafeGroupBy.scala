@@ -1,16 +1,16 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.{DupelessSeq, NonEmptyDupelessSeq, NonEmptyIterableCompanion, NonEmptyMap, NonEmptySet}
+import au.id.tmm.collections.{DupelessSeq, NonEmptyDupelessSeq, NonEmptyIterableCompanion, NonEmptySet}
 
 import scala.collection.{IterableOps, mutable}
 
 trait SafeGroupBy[C[_], NEC[_]] {
 
-  def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): NonEmptyMap[K, NEC[V]]
+  def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): Map[K, NEC[V]]
 
-  def safeGroupBy[A, K](ca: C[A])(f: A => K): NonEmptyMap[K, NEC[A]] = safeGroupMap[A, K, A](ca)(f)(identity)
+  def safeGroupBy[A, K](ca: C[A])(f: A => K): Map[K, NEC[A]] = safeGroupMap[A, K, A](ca)(f)(identity)
 
-  def safeGroupByKey[A, K, V](ca: C[A])(implicit ev: A <:< (K, V)): NonEmptyMap[K, NEC[V]] =
+  def safeGroupByKey[A, K, V](ca: C[A])(implicit ev: A <:< (K, V)): Map[K, NEC[V]] =
     safeGroupMap(ca)(_._1)(_._2)
 
 }
@@ -20,13 +20,13 @@ object SafeGroupBy extends SafeGroupByInstances {
   def apply[C[_], NEC[_]](implicit safeGroupBy: SafeGroupBy[C, NEC]): SafeGroupBy[C, NEC] = implicitly
 
   class Ops[C[_], NEC[_], A](ca: C[A])(implicit safeGroupBy: SafeGroupBy[C, NEC]) {
-    def safeGroupMap[K, V](key: A => K)(f: A => V): NonEmptyMap[K, NEC[V]] =
+    def safeGroupMap[K, V](key: A => K)(f: A => V): Map[K, NEC[V]] =
       safeGroupBy.safeGroupMap[A, K, V](ca)(key)(f)
 
-    def safeGroupBy[K](key: A => K): NonEmptyMap[K, NEC[A]] =
+    def safeGroupBy[K](key: A => K): Map[K, NEC[A]] =
       safeGroupBy.safeGroupBy[A, K](ca)(key)
 
-    def safeGroupByKey[K, V](implicit ev: A <:< (K, V)): NonEmptyMap[K, NEC[V]] =
+    def safeGroupByKey[K, V](implicit ev: A <:< (K, V)): Map[K, NEC[V]] =
       safeGroupBy.safeGroupByKey(ca)
   }
 
@@ -44,7 +44,7 @@ object SafeGroupBy extends SafeGroupByInstances {
 
     def makeNecUnsafe[A](ca: C[A]): NEC[A]
 
-    override def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): NonEmptyMap[K, NEC[V]] = {
+    override def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): Map[K, NEC[V]] = {
       val interim = mutable.Map[K, CBuilder[V]]()
 
       ca.foreach { a: A =>
@@ -56,7 +56,7 @@ object SafeGroupBy extends SafeGroupByInstances {
         cBuilder.addOne(v)
       }
 
-      val result = NonEmptyMap.unsafeBuilder[K, NEC[V]]
+      val result = Map.newBuilder[K, NEC[V]]
 
       result.sizeHint(interim.size)
 
