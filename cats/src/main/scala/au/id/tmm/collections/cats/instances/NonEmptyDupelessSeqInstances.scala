@@ -4,7 +4,7 @@ import au.id.tmm.collections.NonEmptyDupelessSeq
 import au.id.tmm.collections.cats.instances.dupelessSeq._
 import cats.kernel.{Band, Hash}
 import cats.syntax.show.toShow
-import cats.{Apply, Eval, NonEmptyTraverse, SemigroupK, Show}
+import cats.{Apply, Eval, Foldable, NonEmptyTraverse, SemigroupK, Show}
 
 trait NonEmptyDupelessSeqInstances {
 
@@ -49,7 +49,7 @@ trait NonEmptyDupelessSeqInstances {
         fa.foldLeft(b)(f)
 
       override def foldRight[A, B](fa: NonEmptyDupelessSeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-        fa.foldRight(lb)(f)
+        Foldable.iterateRight(fa.toIterable, lb)(f)
     }
 
 }

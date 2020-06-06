@@ -3,7 +3,7 @@ package au.id.tmm.collections.cats.instances
 import au.id.tmm.collections.NonEmptyArraySeq
 import cats.data.Ior
 import cats.kernel.{Eq, Hash, Semigroup}
-import cats.{Align, Applicative, Apply, Bimonad, CoflatMap, Eval, Functor, Monad, NonEmptyTraverse, SemigroupK, Show}
+import cats.{Align, Applicative, Apply, Bimonad, CoflatMap, Eval, Foldable, Functor, Monad, NonEmptyTraverse, SemigroupK, Show}
 import cats.instances.arraySeq._
 import cats.syntax.traverse.toTraverseOps
 import cats.syntax.functor.toFunctorOps
@@ -55,7 +55,7 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
     override def foldLeft[A, B](fa: NonEmptyArraySeq[A], b: B)(f: (B, A) => B): B = fa.foldLeft(b)(f)
 
     override def foldRight[A, B](fa: NonEmptyArraySeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-      fa.foldRight(lb)(f)
+      Foldable.iterateRight(fa.toIterable, lb)(f)
 
     override def flatMap[A, B](fa: NonEmptyArraySeq[A])(f: A => NonEmptyArraySeq[B]): NonEmptyArraySeq[B] =
       fa.flatMap(f)

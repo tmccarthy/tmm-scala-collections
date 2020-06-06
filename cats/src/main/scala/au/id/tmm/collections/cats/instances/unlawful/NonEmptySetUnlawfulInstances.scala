@@ -1,7 +1,7 @@
 package au.id.tmm.collections.cats.instances.unlawful
 
 import au.id.tmm.collections.NonEmptySet
-import cats.{Apply, Eval, Monad, NonEmptyTraverse}
+import cats.{Apply, Eval, Foldable, Monad, NonEmptyTraverse}
 
 import scala.collection.mutable
 
@@ -37,7 +37,7 @@ trait NonEmptySetUnlawfulInstances {
         fa.foldLeft(b)(f)
 
       override def foldRight[A, B](fa: NonEmptySet[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-        fa.foldRight(lb)(f)
+        Foldable.iterateRight(fa.toIterable, lb)(f)
 
       override def flatMap[A, B](fa: NonEmptySet[A])(f: A => NonEmptySet[B]): NonEmptySet[B] =
         fa.flatMap(f)

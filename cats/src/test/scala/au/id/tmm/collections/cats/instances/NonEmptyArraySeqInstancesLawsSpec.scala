@@ -3,14 +3,13 @@ package au.id.tmm.collections.cats.instances
 import au.id.tmm.collections.NonEmptyArraySeq
 import au.id.tmm.collections.cats.instances.nonEmptyArraySeq._
 import au.id.tmm.collections.scalacheck.nonEmptyArraySeq._
-import au.id.tmm.utilities.testing.AdHocTestIgnore
 import cats.data.Validated
 import cats.kernel.laws.discipline.{EqTests, HashTests, SemigroupTests}
 import cats.laws.discipline.arbitrary._
 import cats.laws.discipline.{AlignTests, BimonadTests, NonEmptyTraverseTests, SemigroupKTests}
 import cats.tests.CatsSuite
 
-class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
+class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite {
 
   checkAll("Hash for NonEmptyArraySeq", HashTests[NonEmptyArraySeq[Int]].hash)
   checkAll("Eq for NonEmptyArraySeq", EqTests[NonEmptyArraySeq[Int]](catsStdEqForTmmUtilsNonEmptyArraySeq).eqv)
@@ -22,12 +21,5 @@ class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
     NonEmptyTraverseTests[NonEmptyArraySeq].nonEmptyTraverse[Option, Int, Int, Int, Int, Option, Validated[Unit, *]],
   )
   checkAll("Semigroup for NonEmptyArraySeq", SemigroupTests[NonEmptyArraySeq[Int]].semigroup)
-
-  override protected val ignoredTestNames: Set[String] = Set(
-    // TODO these should probably pass
-    "NonEmptyTraverse for NonEmptyArraySeq.nonEmptyTraverse.forall is lazy",
-    "NonEmptyTraverse for NonEmptyArraySeq.nonEmptyTraverse.foldRight is lazy",
-    "NonEmptyTraverse for NonEmptyArraySeq.nonEmptyTraverse.exists is lazy",
-  )
 
 }
