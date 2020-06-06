@@ -1,8 +1,3 @@
-package au.id
+package au.id.tmm
 
-package object tmm {
-
-  // TODO non-empty map
-  // TODO non-empty ArraySeq
-
-}
+package object collections

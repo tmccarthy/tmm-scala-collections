@@ -4,7 +4,6 @@ import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 import scala.reflect.ClassTag
 
-// TODO what would this look like as an AnyRef wrapper?
 final class NonEmptyArraySeq[+A] private (val underlying: ArraySeq[A])
     extends NonEmptySeqOps[ArraySeq, NonEmptyArraySeq, A] {
   override protected def constructor[X](cx: ArraySeq[X]): NonEmptyArraySeq[X] = new NonEmptyArraySeq[X](cx)

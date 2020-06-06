@@ -76,4 +76,8 @@ class NonEmptyMapSpec extends AnyFlatSpec {
     assert(actual === expected)
   }
 
+  it can "be constructed from a non-empty arrayseq" in {
+    assert(NonEmptyArraySeq.of("hello" -> 1).toNonEmptyMap === NonEmptyMap.one("hello", 1))
+  }
+
 }
