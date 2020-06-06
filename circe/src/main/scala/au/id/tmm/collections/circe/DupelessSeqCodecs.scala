@@ -7,8 +7,6 @@ import scala.collection.immutable.ArraySeq
 
 trait DupelessSeqCodecs {
 
-  import ArraySeqCodecs._
-
   implicit def dupelessSeqEncoder[A : Encoder]: Encoder[DupelessSeq[A]] =
     Encoder[ArraySeq[A]].contramap(_.toArraySeq)
 

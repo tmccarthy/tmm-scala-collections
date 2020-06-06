@@ -6,6 +6,8 @@ import io.circe.Json
 import io.circe.syntax.EncoderOps
 import org.scalatest.flatspec.AnyFlatSpec
 
+import scala.collection.immutable.ArraySeq
+
 class NonEmptyArraySeqCodecsSpec extends AnyFlatSpec {
   "the nonEmptyArraySeqEncoder" should "encode a dupeless seq" in {
     assert(NonEmptyArraySeq.of(1, 2, 3).asJson === Json.arr(1.asJson, 2.asJson, 3.asJson))
@@ -23,6 +25,10 @@ class NonEmptyArraySeqCodecsSpec extends AnyFlatSpec {
         .leftGet
         .message === "Empty array cannot be decoded to NonEmptyArraySeq",
     )
+  }
+
+  it should "specialise the underlying ArraySeq if a classtag is available" in {
+    assert(Json.arr(1.asJson).as[NonEmptyArraySeq[Int]].get.underlying.getClass === classOf[ArraySeq.ofInt])
   }
 
 }
