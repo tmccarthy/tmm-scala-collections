@@ -6,6 +6,7 @@ package object unlawful {
   object nonEmptyDupelessSeq extends NonEmptyDupelessSeqUnlawfulInstances
   object nonEmptySet         extends NonEmptySetUnlawfulInstances
   object nonEmptyMap         extends NonEmptyMapUnlawfulInstances
+  object applicative         extends ApplicativeUnlawfulInstances
 
   object all
       extends AnyRef
@@ -13,7 +14,6 @@ package object unlawful {
       with NonEmptyDupelessSeqUnlawfulInstances
       with NonEmptySetUnlawfulInstances
       with NonEmptyMapUnlawfulInstances
-
-  // TODO generic conversion from UnorderedTraverse to Traverse
+      with ApplicativeUnlawfulInstances
 
 }
