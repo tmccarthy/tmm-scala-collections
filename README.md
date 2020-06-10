@@ -53,7 +53,8 @@ The other modules in this project provide integration between the above collecti
 import au.id.tmm.collections.syntax._
 ```
 
-The `tmm-scala-collections-core` project many useful syntaxes via the above import. Some highlights are outlined below:
+The `tmm-scala-collections-core` project provides a few useful syntax extensions via the above import. Some highlights 
+are outlined below:
 
 #### Safe `groupBy`
 
