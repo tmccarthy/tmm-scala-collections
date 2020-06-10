@@ -1,5 +1,6 @@
 package au.id.tmm.collections
 
+import scala.annotation.unchecked.uncheckedVariance
 import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 import scala.reflect.ClassTag
@@ -20,6 +21,10 @@ final class NonEmptyArraySeq[+A] private (val underlying: ArraySeq[A])
     }
 
   override def hashCode(): Int = underlying.hashCode()
+
+  override def toNonEmptyArraySeq(implicit ev: ClassTag[A] @uncheckedVariance): NonEmptyArraySeq[A] = this
+
+  override def toUntaggedNonEmptyArraySeq: NonEmptyArraySeq[A] = this
 
 }
 

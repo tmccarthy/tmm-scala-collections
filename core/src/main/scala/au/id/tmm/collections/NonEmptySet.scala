@@ -68,6 +68,7 @@ final class NonEmptySet[A] private (val underlying: Set[A])
 
   override def hashCode(): Int = underlying.hashCode()
 
+  override def toNonEmptySet[B >: A]: NonEmptySet[B] = this.asInstanceOf[NonEmptySet[B]]
 }
 
 object NonEmptySet extends NonEmptyIterableCompanion[Set, NonEmptySet] {

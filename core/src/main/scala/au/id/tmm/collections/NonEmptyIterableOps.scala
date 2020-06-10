@@ -1,5 +1,6 @@
 package au.id.tmm.collections
 
+import scala.annotation.unchecked.uncheckedVariance
 import scala.collection.{Factory, IterableOps, View, WithFilter, mutable}
 import scala.reflect.ClassTag
 
@@ -191,6 +192,18 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def toNonEmptyMap[K, V](implicit ev: A <:< (K, V)): NonEmptyMap[K, V] =
     NonEmptyMap.fromIterableUnsafe[K, V](underlying.toIterable.asInstanceOf[Iterable[(K, V)]])
+
+  def toNonEmptyArraySeq(implicit ev: ClassTag[A] @uncheckedVariance): NonEmptyArraySeq[A] =
+    NonEmptyArraySeq.fromIterableUnsafe(underlying.toIterable)
+
+  def toUntaggedNonEmptyArraySeq: NonEmptyArraySeq[A] =
+    NonEmptyArraySeq.untagged.fromIterableUnsafe(underlying.toIterable)
+
+  def toNonEmptyDupelessSeq: NonEmptyDupelessSeq[A] =
+    NonEmptyDupelessSeq.fromIterableUnsafe(underlying.toIterable)
+
+  def toNonEmptySet[B >: A]: NonEmptySet[B] =
+    NonEmptySet.fromIterableUnsafe(underlying.toIterable)
 
   def toArray[B >: A](implicit evidence$2: ClassTag[B]): Array[B] = underlying.toArray[B]
 
