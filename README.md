@@ -3,7 +3,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/au.id.tmm.tmm-scala-collections/tmm-scala-collections-core_2.13.svg)](https://repo.maven.apache.org/maven2/au/id/tmm/tmm-scala-collections/tmm-scala-collections-core_2.13/)
 
 This is a set of libraries that contain Scala collections and collection-oriented utilities that I've found useful. It 
-was previous a sub-project of [tmccarthy/tmmUtils](https://github.com/tmccarthy/tmmUtils), but it has reached a level of
+was previously a sub-project of [tmccarthy/tmmUtils](https://github.com/tmccarthy/tmmUtils), but it has reached a level of
 maturity that justifies splitting it out.
 
 ## Usage
