@@ -1,6 +1,12 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.{DupelessSeq, NonEmptyArraySeq, NonEmptyDupelessSeq, NonEmptyIterableCompanion, NonEmptySet}
+import au.id.tmm.collections.{
+  DupelessSeq,
+  NonEmptyArraySeq,
+  NonEmptyDupelessSeq,
+  NonEmptyIterableCompanion,
+  NonEmptySet,
+}
 
 import scala.collection.immutable.ArraySeq
 import scala.collection.{IterableOps, mutable}
