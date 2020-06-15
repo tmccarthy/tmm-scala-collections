@@ -1,7 +1,8 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.{DupelessSeq, NonEmptyDupelessSeq, NonEmptyIterableCompanion, NonEmptySet}
+import au.id.tmm.collections.{DupelessSeq, NonEmptyArraySeq, NonEmptyDupelessSeq, NonEmptyIterableCompanion, NonEmptySet}
 
+import scala.collection.immutable.ArraySeq
 import scala.collection.{IterableOps, mutable}
 
 trait SafeGroupBy[C[_], NEC[_]] {
@@ -88,5 +89,8 @@ trait SafeGroupByInstances {
 
   implicit val safeGroupByForDupelessSeqUsingTmmUtilsNonEmptySet: SafeGroupBy[DupelessSeq, NonEmptyDupelessSeq] =
     new SafeGroupBy.ForScalaIterable.UsingTmmUtilsNonEmpty[DupelessSeq, NonEmptyDupelessSeq](NonEmptyDupelessSeq)
+
+  implicit val safeGroupByForArraySeqUsingTmmUtilsNonEmptyArraySeq: SafeGroupBy[ArraySeq, NonEmptyArraySeq] =
+    new SafeGroupBy.ForScalaIterable.UsingTmmUtilsNonEmpty[ArraySeq, NonEmptyArraySeq](NonEmptyArraySeq.untagged)
 
 }

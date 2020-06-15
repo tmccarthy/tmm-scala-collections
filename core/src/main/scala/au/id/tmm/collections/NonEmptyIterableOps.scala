@@ -225,10 +225,12 @@ trait NonEmptyIterableCompanion[C[X] <: IterableOps[X, C, C[X]], NEC[_]] {
 
   def of[A](head: A, tail: A*): NEC[A] = fromHeadTail(head, tail)
 
-  protected def fromUnderlying[A](underlying: C[A]): Option[NEC[A]] =
+  // TODO should be protected once we have a proper typeclass to abstract over this stuff
+  def fromUnderlying[A](underlying: C[A]): Option[NEC[A]] =
     if (underlying.isEmpty) None else Some(constructor(underlying))
 
-  protected def fromUnderlyingUnsafe[A](underlying: C[A]): NEC[A] =
+  // TODO should be protected once we have a proper typeclass to abstract over this stuff
+  def fromUnderlyingUnsafe[A](underlying: C[A]): NEC[A] =
     if (underlying.isEmpty)
       throw new IllegalArgumentException("Cannot create NEC from empty set")
     else
