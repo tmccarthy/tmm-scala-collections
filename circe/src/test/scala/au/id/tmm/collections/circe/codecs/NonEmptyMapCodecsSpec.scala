@@ -1,6 +1,7 @@
-package au.id.tmm.collections.circe
+package au.id.tmm.collections.circe.codecs
 
 import au.id.tmm.collections.NonEmptyMap
+import au.id.tmm.collections.circe.codecs.all._
 import au.id.tmm.utilities.testing.syntax._
 import io.circe.syntax.EncoderOps
 import io.circe.{Json, KeyEncoder}

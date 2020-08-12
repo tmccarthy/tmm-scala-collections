@@ -1,6 +1,7 @@
-package au.id.tmm.collections.circe
+package au.id.tmm.collections.circe.codecs
 
 import au.id.tmm.collections.cats.instances.all._
+import au.id.tmm.collections.circe.codecs.all._
 import au.id.tmm.collections.scalacheck.all._
 import au.id.tmm.collections.{DupelessSeq, NonEmptyArraySeq, NonEmptyDupelessSeq, NonEmptySet}
 import cats.instances.arraySeq._

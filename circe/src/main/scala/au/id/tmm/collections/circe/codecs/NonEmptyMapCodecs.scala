@@ -1,4 +1,4 @@
-package au.id.tmm.collections.circe
+package au.id.tmm.collections.circe.codecs
 
 import au.id.tmm.collections.NonEmptyMap
 import io.circe.{Decoder, Encoder, Json, KeyDecoder, KeyEncoder}

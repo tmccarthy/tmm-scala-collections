@@ -1,4 +1,4 @@
-val settingsHelper = ProjectSettingsHelper("au.id.tmm","tmm-scala-collections")()
+val settingsHelper = ProjectSettingsHelper("au.id.tmm", "tmm-scala-collections")()
 
 settingsHelper.settingsForBuild
 
@@ -13,8 +13,8 @@ lazy val root = project
     circe,
   )
 
-val catsVersion = "2.2.0-M2"
-val circeVersion = "0.13.0"
+val catsVersion  = "2.2.0-M2"
+val circeVersion = "0.14.0-M1"
 
 lazy val core = project
   .in(file("core"))
@@ -43,7 +43,7 @@ lazy val circe = project
   .settings(settingsHelper.settingsForSubprojectCalled("circe"))
   .settings(
     libraryDependencies += "io.circe" %% "circe-core"    % circeVersion,
-    libraryDependencies += "io.circe" %% "circe-testing" % circeVersion % Test
+    libraryDependencies += "io.circe" %% "circe-testing" % circeVersion % Test,
   )
   .dependsOn(core, scalaCheck % "compile->test", cats % "compile->test")
 

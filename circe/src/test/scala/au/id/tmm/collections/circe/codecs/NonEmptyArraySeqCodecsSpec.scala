@@ -1,7 +1,8 @@
-package au.id.tmm.collections.circe
+package au.id.tmm.collections.circe.codecs
 
-import au.id.tmm.utilities.testing.syntax._
 import au.id.tmm.collections.NonEmptyArraySeq
+import au.id.tmm.collections.circe.codecs.all._
+import au.id.tmm.utilities.testing.syntax._
 import io.circe.Json
 import io.circe.syntax.EncoderOps
 import org.scalatest.flatspec.AnyFlatSpec

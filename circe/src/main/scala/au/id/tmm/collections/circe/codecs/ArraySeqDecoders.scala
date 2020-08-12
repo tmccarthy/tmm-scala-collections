@@ -1,4 +1,4 @@
-package au.id.tmm.collections.circe
+package au.id.tmm.collections.circe.codecs
 
 import io.circe.Decoder
 
