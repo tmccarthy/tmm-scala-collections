@@ -3,11 +3,11 @@ package au.id.tmm.collections.syntax
 import scala.collection.{BuildFrom, mutable}
 
 final class IterableOps[C[_], A] private[syntax] (
-  iterable: C[A],
+  private[syntax] val iterable: C[A],
 )(implicit
-  buildFrom: BuildFrom[C[A], A, C[A]],
-  ev: C[A] <:< Iterable[A],
-) {
+  private[syntax] val buildFrom: BuildFrom[C[A], A, C[A]],
+  private[syntax] val ev: C[A] <:< Iterable[A],
+) extends UnzipOps[C, A] {
 
   def atMostOneOr[E](error: => E): Either[E, Option[A]] = {
     if (iterable.isEmpty) return Right(None)
