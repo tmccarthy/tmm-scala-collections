@@ -42,4 +42,13 @@ class NonEmptyDupelessSeqSpec extends AnyFlatSpec {
     assert(NonEmptyDupelessSeq.of(1, 2, 3).toNonEmptySet === NonEmptySet.of(1, 2, 3))
   }
 
+  it can "be grouped" in {
+    assert(
+      NonEmptyDupelessSeq.of("hello", "world").groupBy(_.head) === Map(
+        'h' -> NonEmptyDupelessSeq.of("hello"),
+        'w' -> NonEmptyDupelessSeq.of("world"),
+      ),
+    )
+  }
+
 }

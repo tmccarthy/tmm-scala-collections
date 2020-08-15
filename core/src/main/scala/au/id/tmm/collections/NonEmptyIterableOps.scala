@@ -63,7 +63,7 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def slice(from: Int, until: Int): C[A] = underlying.slice(from, until)
 
-  def groupBy[K](f: A => K): Map[K, C[A]] = underlying.groupBy(f)
+  def groupBy[K](f: A => K): Map[K, NEC[A]] = underlying.groupBy(f).view.mapValues(constructor).toMap
 
   def groupMap[K, B](key: A => K)(f: A => B): Map[K, C[B]] = underlying.groupMap(key)(f)
 
