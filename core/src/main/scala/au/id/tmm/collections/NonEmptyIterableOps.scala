@@ -65,7 +65,8 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def groupBy[K](f: A => K): Map[K, NEC[A]] = underlying.groupBy(f).view.mapValues(constructor).toMap
 
-  def groupMap[K, B](key: A => K)(f: A => B): Map[K, C[B]] = underlying.groupMap(key)(f)
+  def groupMap[K, B](key: A => K)(f: A => B): Map[K, NEC[B]] =
+    underlying.groupMap(key)(f).view.mapValues(constructor).toMap
 
   def groupMapReduce[K, B](key: A => K)(f: A => B)(reduce: (B, B) => B): Map[K, B] =
     underlying.groupMapReduce(key)(f)(reduce)

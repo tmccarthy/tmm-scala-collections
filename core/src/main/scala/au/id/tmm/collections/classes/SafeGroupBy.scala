@@ -1,12 +1,6 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.{
-  DupelessSeq,
-  NonEmptyArraySeq,
-  NonEmptyDupelessSeq,
-  NonEmptyIterableCompanion,
-  NonEmptySet,
-}
+import au.id.tmm.collections._
 
 import scala.collection.immutable.ArraySeq
 import scala.collection.{IterableOps, mutable}
@@ -78,6 +72,14 @@ object SafeGroupBy extends SafeGroupByInstances {
     }
   }
 
+  private[collections] class ForTmmUtilsNonEmpty[
+    C[+X] <: IterableOps[X, C, C[X]],
+    NEC[+X] <: NonEmptyIterableOps[C, NEC, X],
+  ] extends SafeGroupBy[NEC, NEC] {
+    override def safeGroupMap[A, K, V](ca: NEC[A])(key: A => K)(f: A => V): Map[K, NEC[V]] = ca.groupMap(key)(f)
+    override def safeGroupBy[A, K](ca: NEC[A])(f: A => K): Map[K, NEC[A]]                  = ca.groupBy(f)
+  }
+
   object ForScalaIterable {
     class UsingTmmUtilsNonEmpty[C[X] <: IterableOps[X, C, C[X]], NEC[_]] private[classes] (
       necCompanion: NonEmptyIterableCompanion[C, NEC],
@@ -98,5 +100,14 @@ trait SafeGroupByInstances {
 
   implicit val safeGroupByForArraySeqUsingTmmUtilsNonEmptyArraySeq: SafeGroupBy[ArraySeq, NonEmptyArraySeq] =
     new SafeGroupBy.ForScalaIterable.UsingTmmUtilsNonEmpty[ArraySeq, NonEmptyArraySeq](NonEmptyArraySeq.untagged)
+
+  implicit val safeGroupByForTmmUtilsNonEmptyArraySeq: SafeGroupBy[NonEmptyArraySeq, NonEmptyArraySeq] =
+    new SafeGroupBy.ForTmmUtilsNonEmpty[ArraySeq, NonEmptyArraySeq]
+
+  implicit val safeGroupByForTmmUtilsNonEmptyDupelessSeq: SafeGroupBy[NonEmptyDupelessSeq, NonEmptyDupelessSeq] =
+    new SafeGroupBy.ForTmmUtilsNonEmpty[DupelessSeq, NonEmptyDupelessSeq]
+
+  implicit val safeGroupByForTmmUtilsNonEmptySet: SafeGroupBy[NonEmptySet, NonEmptySet] =
+    new SafeGroupBy.ForTmmUtilsNonEmpty[NonEmptySet.CovariantSet, NonEmptySet.Covariant]
 
 }
