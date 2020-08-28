@@ -45,6 +45,8 @@ class NonEmptySetInstancesLawsSpec extends CatsSuite with AdHocTestIgnore {
 
   override protected val ignoredTestNames: Set[String] = Set(
     "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.traverse order consistency",
+    "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.ordered constistency",
+    "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.ordered consistency",
   )
 
 }
