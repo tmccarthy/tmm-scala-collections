@@ -8,3 +8,4 @@ package object syntax
     with IterableOps.ToIterableOps
     with IteratorOps.ToIteratorOps
     with SeqOps.ToSeqOps
+    with BufferedIteratorOps.ToBufferedIteratorOps
