@@ -7,6 +7,7 @@ package object unlawful {
   object nonEmptySet         extends NonEmptySetUnlawfulInstances
   object nonEmptyMap         extends NonEmptyMapUnlawfulInstances
   object applicative         extends ApplicativeUnlawfulInstances
+  object map                 extends MapUnlawfulInstances
 
   object all
       extends AnyRef
