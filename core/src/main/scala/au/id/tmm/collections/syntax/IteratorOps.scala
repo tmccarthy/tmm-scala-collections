@@ -3,6 +3,7 @@ package au.id.tmm.collections.syntax
 import scala.annotation.tailrec
 import scala.collection.mutable
 
+// TODO replace Vector with ArraySeq here
 final class IteratorOps[+A] private[syntax] (iterator: Iterator[A]) {
 
   /**
