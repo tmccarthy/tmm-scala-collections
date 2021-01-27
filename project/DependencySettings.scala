@@ -10,8 +10,9 @@ object DependencySettings {
     libraryDependencies += "org.scalatest"       %% "scalatest"         % "3.2.0-M4"      % Test,
     libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing" % "0.4.7"         % Test,
     libraryDependencies += "com.github.ghik"     %% "silencer-lib"      % silencerVersion % Provided cross CrossVersion.full,
-
-    libraryDependencies += compilerPlugin("com.github.ghik" %% "silencer-plugin" % silencerVersion cross CrossVersion.full),
+    libraryDependencies += compilerPlugin(
+      "com.github.ghik" %% "silencer-plugin" % silencerVersion cross CrossVersion.full,
+    ),
   )
 
 }
