@@ -38,6 +38,18 @@ final class IterableOps[C[_], A] private[syntax] (
   def onlyElementOrException: Either[Exception, A] =
     onlyElementOr(new Exception(s"Expected exactly one element. $describeIterable"))
 
+  def headOr[E](error: => E): Either[E, A] =
+    iterable.headOption.toRight(error)
+
+  def headOrException[E]: Either[Exception, A] =
+    headOr(new Exception(s"Expected non-empty collection. $describeIterable"))
+
+  def lastOr[E](error: => E): Either[E, A] =
+    iterable.lastOption.toRight(error)
+
+  def lastOrException[E]: Either[Exception, A] =
+    lastOr(new Exception(s"Expected non-empty collection. $describeIterable"))
+
   def emptyOr[E](error: => E): Either[E, Unit] =
     if (iterable.isEmpty) Right(()) else Left(error)
 

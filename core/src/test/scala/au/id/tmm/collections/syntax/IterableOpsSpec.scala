@@ -37,6 +37,34 @@ class IterableOpsSpec extends AnyFlatSpec {
     assert(LazyList.continually(0).onlyElementOrException.isLeft)
   }
 
+  "head or error" should "return an error for an empty iterable" in {
+    assert(List.empty[Int].headOrException.isLeft)
+  }
+
+  it should "return the element for a 1 element iterable" in {
+    assert(List(1).headOrException.get === 1)
+  }
+
+  it should "return the first element for a 2 element list" in {
+    assert(List(1, 2).headOrException.get === 1)
+  }
+
+  it should "return the first element for an infinitely sized list" in {
+    assert(LazyList.continually(0).headOrException.get === 0)
+  }
+
+  "last or error" should "return an error for an empty iterable" in {
+    assert(List.empty[Int].lastOrException.isLeft)
+  }
+
+  it should "return the element for a 1 element iterable" in {
+    assert(List(1).lastOrException.get === 1)
+  }
+
+  it should "return an error for a 2 element list" in {
+    assert(List(1, 2).lastOrException.get === 2)
+  }
+
   "emptyOr" should "return unit for an empty iterable" in {
     assert(List.empty[Int].emptyOrException.get === ())
   }
