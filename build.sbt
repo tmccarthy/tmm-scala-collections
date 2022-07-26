@@ -1,6 +1,6 @@
 name := "tmm-scala-collections"
 
-ThisBuild / tlBaseVersion := "0.1"
+ThisBuild / tlBaseVersion := "0.2"
 
 Sonatype.SonatypeKeys.sonatypeProfileName := "au.id.tmm"
 ThisBuild / organization := "au.id.tmm.tmm-scala-collections"
