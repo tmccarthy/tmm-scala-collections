@@ -40,8 +40,8 @@ lazy val root = tlCrossRootProject
     circe,
   )
 
-val catsVersion      = "2.2.0-M2"
-val circeVersion     = "0.14.0-M1"
+val catsVersion      = "2.8.0"
+val circeVersion     = "0.15.0-M1"
 val scalatestVersion = "3.2.0-M4"
 val tmmUtilsVersion  = "0.4.7"
 
