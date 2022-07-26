@@ -11,11 +11,11 @@ ThisBuild / developers := List(
   tlGitHubDev("tmccarthy", "Timothy McCarthy"),
 )
 
-val Scala213 = "2.13.8"
+val Scala213 = "2.13.2"
 ThisBuild / scalaVersion := Scala213
 ThisBuild / crossScalaVersions := Seq(
   Scala213,
-//  "3.1.1", TODO
+  "3.1.3",
 )
 
 ThisBuild / githubWorkflowJavaVersions := List(
@@ -59,7 +59,7 @@ lazy val scalaCheck = project
   .in(file("scalacheck"))
   .settings(name := "tmm-scala-collections-scalacheck")
   .settings(
-    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3",
+    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.16.0",
   )
   .settings(
     testFrameworks += new TestFramework("munit.Framework"),

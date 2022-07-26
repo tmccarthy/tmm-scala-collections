@@ -48,7 +48,7 @@ object SafeGroupBy extends SafeGroupByInstances {
     override def safeGroupMap[A, K, V](ca: C[A])(key: A => K)(f: A => V): Map[K, NEC[V]] = {
       val interim = mutable.Map[K, CBuilder[V]]()
 
-      ca.foreach { a: A =>
+      ca.foreach { (a: A) =>
         val k: K = key(a)
         val v: V = f(a)
 

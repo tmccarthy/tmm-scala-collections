@@ -2,7 +2,7 @@ package au.id.tmm.collections.syntax
 
 import scala.collection.{AbstractIterator, BufferedIterator}
 
-final class BufferedIteratorOps[+A] private[syntax] (underlying: BufferedIterator[A]) {
+final class BufferedIteratorOps[+A] private[syntax] (private val underlying: scala.collection.BufferedIterator[A]) {
 
   /**
     * Differs from `takeWhile` in that underlying iterator does not progress past the first element to fail the

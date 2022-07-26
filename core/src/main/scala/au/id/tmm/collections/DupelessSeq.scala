@@ -135,7 +135,7 @@ class DupelessSeq[+A] private (private val iterationOrder: ArraySeq[A], private 
 }
 
 object DupelessSeq extends SeqFactory[DupelessSeq] {
-  private val EMPTY: DupelessSeq[Any] = new DupelessSeq(ArraySeq.empty, Set.empty)
+  private val EMPTY: DupelessSeq[Any] = new DupelessSeq(ArraySeq.untagged.empty, Set.empty)
 
   override def empty[A]: DupelessSeq[A] = EMPTY.asInstanceOf[DupelessSeq[A]]
 
