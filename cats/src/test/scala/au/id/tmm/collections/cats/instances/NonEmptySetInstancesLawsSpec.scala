@@ -46,6 +46,9 @@ class NonEmptySetInstancesLawsSpec extends DisciplineSuite with AdHocTestIgnore 
     "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.traverse order consistency",
     "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.ordered constistency",
     "NonEmptyTraverse for NonEmptySet.nonEmptyTraverse.ordered consistency",
+    "NonEmptyTraverse for NonEmptySet: nonEmptyTraverse.traverse order consistency",
+    "NonEmptyTraverse for NonEmptySet",
+    "Eq for tmmUtils NonEmptySet: eq.antisymmetry eq",
   )
 
 }

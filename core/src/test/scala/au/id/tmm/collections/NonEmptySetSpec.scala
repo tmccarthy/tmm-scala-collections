@@ -13,7 +13,7 @@ class NonEmptySetSpec extends FunSuite {
   }
 
   test("A non-empty set not be equal to another set with a different implementation but same elements") {
-    assertEquals(NonEmptySet.of(1, 2, 3): IterableOnce[Int], Set(1, 2, 3))
+    assertNotEquals(NonEmptySet.of(1, 2, 3): IterableOnce[Int], Set(1, 2, 3): IterableOnce[Int])
   }
 
   test("A non-empty set be constructed from a non-empty set") {

@@ -37,5 +37,9 @@ class MapUnlawfulInstancesSpec extends DisciplineSuite with AdHocTestIgnore {
       "Unlawful Group for Map.group.right inverse",
       "Unlawful CommutativeGroup for Map.group.left inverse",
       "Unlawful CommutativeGroup for Map.group.right inverse",
+      "Unlawful Group for Map: group.left inverse",
+      "Unlawful Group for Map: group.right inverse",
+      "Unlawful CommutativeGroup for Map: group.left inverse",
+      "Unlawful CommutativeGroup for Map: group.right inverse",
     )
 }
