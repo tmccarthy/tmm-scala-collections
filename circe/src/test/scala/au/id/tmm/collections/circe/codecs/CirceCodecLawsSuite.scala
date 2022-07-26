@@ -7,13 +7,11 @@ import au.id.tmm.collections.{DupelessSeq, NonEmptyArraySeq, NonEmptyDupelessSeq
 import cats.instances.arraySeq._
 import io.circe.testing.CodecTests
 import io.circe.testing.instances._
-import org.scalatest.funsuite.AnyFunSuiteLike
-import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
-import org.typelevel.discipline.scalatest.FunSuiteDiscipline
+import munit.DisciplineSuite
 
 import scala.collection.immutable.ArraySeq
 
-class CirceCodecLawsSuite extends AnyFunSuiteLike with ScalaCheckDrivenPropertyChecks with FunSuiteDiscipline {
+class CirceCodecLawsSuite extends DisciplineSuite {
 
   checkAll("ArraySeq codecs", CodecTests[ArraySeq[Int]].codec)
   checkAll("NonEmptyArraySeq codecs", CodecTests[NonEmptyArraySeq[Int]].codec)

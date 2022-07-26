@@ -5,11 +5,11 @@ import au.id.tmm.collections.circe.codecs.all._
 import au.id.tmm.utilities.testing.syntax._
 import io.circe.syntax.EncoderOps
 import io.circe.{Json, KeyEncoder}
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
-class NonEmptyMapCodecsSpec extends AnyFlatSpec {
+class NonEmptyMapCodecsSpec extends FunSuite {
 
-  "the non empty map encoder" should "encode a non-empty map with ordered keys" in {
+  test("the non empty map encoder should encode a non-empty map with ordered keys") {
     val map = NonEmptyMap.of("a" -> 1, "b" -> 2)
 
     val expectedJson = Json.obj(
@@ -17,10 +17,10 @@ class NonEmptyMapCodecsSpec extends AnyFlatSpec {
       "b" -> 2.asJson,
     )
 
-    assert(map.asJson === expectedJson)
+    assertEquals(map.asJson, expectedJson)
   }
 
-  it can "encode a non-empty map with unordered keys" in {
+  test("the non empty map encoder can encode a non-empty map with unordered keys") {
     // We do this to create an "unordered" key
     final case class StringWrapper(asString: String)
     implicit val encoder: KeyEncoder[StringWrapper] = KeyEncoder[String].contramap(_.asString)
@@ -48,7 +48,7 @@ class NonEmptyMapCodecsSpec extends AnyFlatSpec {
     assert(validJsons contains map.asJson)
   }
 
-  "the non-empty map decoder" can "decode a non-empty json object" in {
+  test("the non-empty map decoder can decode a non-empty json object") {
     val json = Json.obj(
       "a" -> 1.asJson,
       "b" -> 2.asJson,
@@ -56,11 +56,11 @@ class NonEmptyMapCodecsSpec extends AnyFlatSpec {
 
     val expectedMap = NonEmptyMap.of("a" -> 1, "b" -> 2)
 
-    assert(json.as[NonEmptyMap[String, Int]] === Right(expectedMap))
+    assertEquals(json.as[NonEmptyMap[String, Int]], Right(expectedMap))
   }
 
-  it can "not decode an empty json object" in {
-    assert(Json.obj().as[NonEmptyMap[String, Int]].leftGet.message === "Empty array cannot be decoded to NonEmptyMap")
+  test("the non-empty map decoder can not decode an empty json object") {
+    assertEquals(Json.obj().as[NonEmptyMap[String, Int]].leftGet.message, "Empty array cannot be decoded to NonEmptyMap")
   }
 
 }

@@ -5,31 +5,32 @@ import au.id.tmm.collections.circe.codecs.all._
 import au.id.tmm.utilities.testing.syntax._
 import io.circe.Json
 import io.circe.syntax.EncoderOps
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
 import scala.collection.immutable.ArraySeq
 
-class NonEmptyArraySeqCodecsSpec extends AnyFlatSpec {
-  "the nonEmptyArraySeqEncoder" should "encode a dupeless seq" in {
-    assert(NonEmptyArraySeq.of(1, 2, 3).asJson === Json.arr(1.asJson, 2.asJson, 3.asJson))
+class NonEmptyArraySeqCodecsSpec extends FunSuite {
+  test("the nonEmptyArraySeqEncoder should encode a dupeless seq") {
+    assertEquals(NonEmptyArraySeq.of(1, 2, 3).asJson, Json.arr(1.asJson, 2.asJson, 3.asJson))
   }
 
-  "the nonEmptyArraySeqDecoder" should "decode an array" in {
-    assert(Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyArraySeq[Int]] === Right(NonEmptyArraySeq.of(1, 2, 3)))
+  test("the nonEmptyArraySeqDecoder should decode an array") {
+    assertEquals(Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyArraySeq[Int]], Right(NonEmptyArraySeq.of(1, 2, 3)))
   }
 
-  it should "error if decoding an empty array" in {
-    assert(
+  test("the nonEmptyArraySeqDecoder should error if decoding an empty array") {
+    assertEquals(
       Json
         .arr()
         .as[NonEmptyArraySeq[Int]]
         .leftGet
-        .message === "Empty array cannot be decoded to NonEmptyArraySeq",
+        .message,
+      "Empty array cannot be decoded to NonEmptyArraySeq",
     )
   }
 
-  it should "specialise the underlying ArraySeq if a classtag is available" in {
-    assert(Json.arr(1.asJson).as[NonEmptyArraySeq[Int]].get.underlying.getClass === classOf[ArraySeq.ofInt])
+  test("the nonEmptyArraySeqDecoder should specialise the underlying ArraySeq if a classtag is available") {
+    assertEquals(Json.arr(1.asJson).as[NonEmptyArraySeq[Int]].get.underlying.getClass.asInstanceOf[Class[Any]], classOf[ArraySeq.ofInt].asInstanceOf[Class[Any]])
   }
 
 }
