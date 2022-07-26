@@ -4,35 +4,6 @@ import scala.annotation.unchecked.uncheckedVariance
 import scala.collection.{Factory, IterableOps, MapView, View, WithFilter, mutable}
 import scala.reflect.ClassTag
 
-//trait NonEmptyIterableOps2[A, NEC_C[_], C_C[_], +C <: IterableOps[A, C_C, C]] extends IterableOnce[A] {
-//
-//  def underlying: C
-//  protected def unwrap[X](necX: NEC_C[X]): C_C[X]
-//  def companion: NonEmptyIterableCompanion2[NEC_C, C_C]
-//
-//  protected def constructor[X](cx: C_C[X]): NEC_C[X] = companion.constructor(cx)
-//  def nonEmptyIterableFactory: NonEmptyIterableCompanion2[NEC_C, C_C] = companion
-//
-//  def view: View[A] = underlying.view
-//
-//  def iterator: Iterator[A] = underlying.iterator
-//
-//  def head: A = underlying.head
-//
-//  def last: A = underlying.last
-//
-//  def transpose[B](implicit asIterable: A <:< Iterable[B]): C_C[NEC_C[B]] = underlying.transpose.map(constructor)
-//
-//}
-//
-//trait NonEmptyIterableCompanion2[NEC_C[_], C_C[_]] {
-//  protected[collections] def className: String
-//  protected[collections] def constructor[A](ca: C_C[A]): NEC_C[A]
-//  protected def newUnderlyingBuilder[A]: mutable.Builder[A, C_C[A]]
-//
-//  def one[A](head: A): NEC_C[A]
-//}
-
 trait NonEmptyIterableOps[C[X] <: IterableOps[X, C, C[X]], NEC[_], +A] extends IterableOnce[A] {
 
   def underlying: C[A @uncheckedVariance]

@@ -50,6 +50,9 @@ lazy val core = project
   .in(file("core"))
   .settings(name := "tmm-scala-collections-core")
   .settings(
+    Compile / doc / sources := Nil, // This causes a crash so we are disabling it
+  )
+  .settings(
     testFrameworks += new TestFramework("munit.Framework"),
     libraryDependencies += "org.scalameta"       %% "munit"                  % mUnitVersion    % Test,
     libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing-core" % tmmUtilsVersion % Test,
