@@ -25,7 +25,7 @@ trait NonEmptyMapUnlawfulInstances {
 
       override def foldLeft[A, B](fa: NonEmptyMap[K, A], b: B)(f: (B, A) => B): B =
         fa.foldLeft(b) {
-          case (b, (k, a)) => f(b, a)
+          case (b, (_, a)) => f(b, a)
         }
 
       override def foldRight[A, B](fa: NonEmptyMap[K, A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =

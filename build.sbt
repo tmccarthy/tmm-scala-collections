@@ -15,7 +15,7 @@ val Scala213 = "2.13.8"
 ThisBuild / scalaVersion := Scala213
 ThisBuild / crossScalaVersions := Seq(
   Scala213,
-  "3.1.1",
+//  "3.1.1", TODO
 )
 
 ThisBuild / githubWorkflowJavaVersions := List(

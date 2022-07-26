@@ -37,7 +37,7 @@ trait NonEmptySetUnlawfulInstances {
         fa.foldLeft(b)(f)
 
       override def foldRight[A, B](fa: NonEmptySet[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-        Foldable.iterateRight(fa.toIterable, lb)(f)
+        Foldable.iterateRight[A, B](fa.to(Iterable), lb)(f)
 
       override def flatMap[A, B](fa: NonEmptySet[A])(f: A => NonEmptySet[B]): NonEmptySet[B] =
         fa.flatMap(f)

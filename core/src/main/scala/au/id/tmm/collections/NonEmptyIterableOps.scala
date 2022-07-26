@@ -17,8 +17,6 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def view: View[A] = underlying.view
 
-  def toIterable: Iterable[A] = underlying.toIterable
-
   def iterator: Iterator[A] = underlying.iterator
 
   def head: A = underlying.head
@@ -192,19 +190,19 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
   def toIndexedSeq: IndexedSeq[A]                       = underlying.toIndexedSeq
 
   def toNonEmptyMap[K, V](implicit ev: A <:< (K, V)): NonEmptyMap[K, V] =
-    NonEmptyMap.fromIterableUnsafe[K, V](underlying.toIterable.asInstanceOf[Iterable[(K, V)]])
+    NonEmptyMap.fromIterableUnsafe[K, V](underlying.to(Iterable).asInstanceOf[Iterable[(K, V)]])
 
   def toNonEmptyArraySeq(implicit ev: ClassTag[A] @uncheckedVariance): NonEmptyArraySeq[A] =
-    NonEmptyArraySeq.fromIterableUnsafe(underlying.toIterable)
+    NonEmptyArraySeq.fromIterableUnsafe(underlying.to(Iterable))
 
   def toUntaggedNonEmptyArraySeq: NonEmptyArraySeq[A] =
-    NonEmptyArraySeq.untagged.fromIterableUnsafe(underlying.toIterable)
+    NonEmptyArraySeq.untagged.fromIterableUnsafe(underlying.to(Iterable))
 
   def toNonEmptyDupelessSeq: NonEmptyDupelessSeq[A] =
-    NonEmptyDupelessSeq.fromIterableUnsafe(underlying.toIterable)
+    NonEmptyDupelessSeq.fromIterableUnsafe(underlying.to(Iterable))
 
   def toNonEmptySet[B >: A]: NonEmptySet[B] =
-    NonEmptySet.fromIterableUnsafe(underlying.toIterable)
+    NonEmptySet.fromIterableUnsafe(underlying.to(Iterable))
 
   def toArray[B >: A](implicit evidence$2: ClassTag[B]): Array[B] = underlying.toArray[B]
 

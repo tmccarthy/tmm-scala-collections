@@ -1,5 +1,6 @@
 package au.id.tmm.collections
 
+import org.scalatest
 import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.collection.immutable.ArraySeq
@@ -7,7 +8,7 @@ import scala.reflect.ClassTag
 
 class NonEmptyArraySeqSpec extends AnyFlatSpec {
 
-  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: NonEmptyArraySeq[_]): Unit =
+  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: NonEmptyArraySeq[_]): scalatest.Assertion =
     assert(nonEmptyArraySeq.underlying.getClass === implicitly[ClassTag[T]].runtimeClass)
 
   "The specialised factory methods" can "create a specialised NonEmptyArraySeq from one element" in {

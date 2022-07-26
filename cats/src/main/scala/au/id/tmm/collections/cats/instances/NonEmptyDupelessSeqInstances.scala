@@ -48,7 +48,7 @@ trait NonEmptyDupelessSeqInstances extends NonEmptyDupelessSeqInstances1 {
         fa.foldLeft(b)(f)
 
       override def foldRight[A, B](fa: NonEmptyDupelessSeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-        Foldable.iterateRight(fa.toIterable, lb)(f)
+        Foldable.iterateRight[A, B](fa.to(Iterable), lb)(f)
     }
 
 }

@@ -75,11 +75,11 @@ final class IterableOps[C[_], A] private[syntax] (
     iterable
       .groupMap[K, V](
         key = {
-          case (k: K @unchecked, v) => k
+          case (k: K @unchecked, _) => k
         },
       )(
         f = {
-          case (k, v: V @unchecked) => v
+          case (_, v: V @unchecked) => v
         },
       )
       .asInstanceOf[Map[K, C[V]]]

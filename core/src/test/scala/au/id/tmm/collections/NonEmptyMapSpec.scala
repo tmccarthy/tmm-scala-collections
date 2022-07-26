@@ -35,7 +35,7 @@ class NonEmptyMapSpec extends AnyFlatSpec {
     )
 
     val actual = base.flatMap {
-      case (name, count) =>
+      case (name, _) =>
         List(
           s"${name}_1",
           s"${name}_2",

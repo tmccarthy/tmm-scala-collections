@@ -11,11 +11,11 @@ trait MapOverKeysInstances {
       override def map[K1, K2](fa: Map[K1, V])(f: K1 => K2): Map[K2, V] =
         fa.groupMapReduce[K2, V](
           key = {
-            case (k1, v) => f(k1): K2
+            case (k1, _) => f(k1): K2
           },
         )(
           f = {
-            case (k1, v) => v
+            case (_, v) => v
           },
         )(
           reduce = Semigroup[V].combine,

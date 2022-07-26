@@ -28,9 +28,7 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
   implicit def tmmUtilsHashForTmmUtilsNonEmptyArraySeq[A : Hash]: Hash[NonEmptyArraySeq[A]] = Hash.by(_.underlying)
 
   implicit def tmmUtilsShowForTmmUtilsNonEmptyArraySeq[A : Show]: Show[NonEmptyArraySeq[A]] =
-    new Show[NonEmptyArraySeq[A]] {
-      override def show(t: NonEmptyArraySeq[A]): String = ???
-    }
+    as => Show[ArraySeq[A]].show(as.underlying)
 
   implicit val tmmUtilsInstancesForTmmUtilsNonEmptyArraySeq: NonEmptyTraverse[NonEmptyArraySeq]
     with Bimonad[NonEmptyArraySeq]
@@ -76,7 +74,7 @@ trait NonEmptyArraySeqInstances extends NonEmptyArraySeqInstances1 {
     override def foldLeft[A, B](fa: NonEmptyArraySeq[A], b: B)(f: (B, A) => B): B = fa.foldLeft(b)(f)
 
     override def foldRight[A, B](fa: NonEmptyArraySeq[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
-      Foldable.iterateRight(fa.toIterable, lb)(f)
+      Foldable.iterateRight[A, B](fa.to(Iterable), lb)(f)
 
     override def flatMap[A, B](fa: NonEmptyArraySeq[A])(f: A => NonEmptyArraySeq[B]): NonEmptyArraySeq[B] =
       fa.flatMap(f)

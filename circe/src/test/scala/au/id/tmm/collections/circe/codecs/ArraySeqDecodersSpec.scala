@@ -4,13 +4,14 @@ import io.circe.{Decoder, Json}
 import io.circe.syntax.EncoderOps
 import org.scalatest.flatspec.AnyFlatSpec
 import au.id.tmm.utilities.testing.syntax._
+import org.scalatest
 
 import scala.collection.immutable.ArraySeq
 import scala.reflect.ClassTag
 
 class ArraySeqDecodersSpec extends AnyFlatSpec {
 
-  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: ArraySeq[_]): Unit =
+  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: ArraySeq[_]): scalatest.Assertion =
     assert(nonEmptyArraySeq.getClass === implicitly[ClassTag[T]].runtimeClass)
 
   "the ArraySeq decoder" should "return a ref ArraySeq if its usage is untagged" in {
