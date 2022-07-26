@@ -13,5 +13,6 @@ object EqOnlyInt {
   implicit val eq: Eq[EqOnlyInt]               = _.asInt == _.asInt
   implicit val arbitrary: Arbitrary[EqOnlyInt] = Arbitrary(Arbitrary.arbitrary[Int].map(EqOnlyInt.apply))
   implicit val cogen: Cogen[EqOnlyInt]         = Cogen[Int].contramap(_.asInt)
-  implicit val shrink: Shrink[EqOnlyInt]       = Shrink(x => Shrink.shrink(x.asInt).map(EqOnlyInt.apply))
+  implicit val shrink: Shrink[EqOnlyInt] =
+    Shrink.withLazyList(x => Shrink.shrink(x.asInt).to(LazyList).map(EqOnlyInt.apply))
 }
