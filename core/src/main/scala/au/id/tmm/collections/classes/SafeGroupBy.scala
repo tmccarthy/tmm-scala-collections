@@ -73,8 +73,8 @@ object SafeGroupBy extends SafeGroupByInstances {
   }
 
   private[collections] class ForTmmUtilsNonEmpty[
-    C[+X] <: IterableOps[X, C, C[X]],
-    NEC[+X] <: NonEmptyIterableOps[C, NEC, X],
+    C[X] <: IterableOps[X, C, C[X]],
+    NEC[X] <: NonEmptyIterableOps[C, NEC, X],
   ] extends SafeGroupBy[NEC, NEC] {
     override def safeGroupMap[A, K, V](ca: NEC[A])(key: A => K)(f: A => V): Map[K, NEC[V]] = ca.groupMap(key)(f)
     override def safeGroupBy[A, K](ca: NEC[A])(f: A => K): Map[K, NEC[A]]                  = ca.groupBy(f)
@@ -108,6 +108,6 @@ trait SafeGroupByInstances {
     new SafeGroupBy.ForTmmUtilsNonEmpty[DupelessSeq, NonEmptyDupelessSeq]
 
   implicit val safeGroupByForTmmUtilsNonEmptySet: SafeGroupBy[NonEmptySet, NonEmptySet] =
-    new SafeGroupBy.ForTmmUtilsNonEmpty[NonEmptySet.CovariantSet, NonEmptySet.Covariant]
+    new SafeGroupBy.ForTmmUtilsNonEmpty[Set, NonEmptySet]
 
 }

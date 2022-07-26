@@ -10,8 +10,8 @@ import scala.collection.mutable
 final class NonEmptySet[A] private (val underlying: Set[A])
     extends (A => Boolean)
     with NonEmptyIterableOps[
-      NonEmptySet.CovariantSet,
-      NonEmptySet.Covariant,
+      Set,
+      NonEmptySet,
       A @uncheckedVariance,
     ] {
 
@@ -73,9 +73,6 @@ final class NonEmptySet[A] private (val underlying: Set[A])
 
 object NonEmptySet extends NonEmptyIterableCompanion[Set, NonEmptySet] {
 
-  type Covariant[+A]    = NonEmptySet[A @uncheckedVariance]
-  type CovariantSet[+A] = Set[A @uncheckedVariance]
-
   override protected[collections] def className: String = "NonEmptySet"
 
   override protected[collections] def constructor[A](ca: Set[A]): NonEmptySet[A] = new NonEmptySet[A](ca)
@@ -89,9 +86,11 @@ object NonEmptySet extends NonEmptyIterableCompanion[Set, NonEmptySet] {
   def fromSetUnsafe[A](set: Set[A]): NonEmptySet[A] = this.fromUnderlyingUnsafe(set)
 
   override def fromIterable[A](iterable: IterableOnce[A]): Option[NonEmptySet[A]] =
-    iterable match {
-      case s: Set[A]      => fromSet(s)
-      case i: Iterable[A] => super.fromIterable(i)
+    if (iterable.getClass eq Set.getClass) {
+      val set = iterable.asInstanceOf[Set[A]]
+      fromSet(set)
+    } else {
+      super.fromIterable(iterable)
     }
 
 }

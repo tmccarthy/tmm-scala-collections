@@ -1,12 +1,41 @@
 package au.id.tmm.collections
 
 import scala.annotation.unchecked.uncheckedVariance
-import scala.collection.{Factory, IterableOps, View, WithFilter, mutable}
+import scala.collection.{Factory, IterableOps, MapView, View, WithFilter, mutable}
 import scala.reflect.ClassTag
 
-trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends IterableOnce[A] {
+//trait NonEmptyIterableOps2[A, NEC_C[_], C_C[_], +C <: IterableOps[A, C_C, C]] extends IterableOnce[A] {
+//
+//  def underlying: C
+//  protected def unwrap[X](necX: NEC_C[X]): C_C[X]
+//  def companion: NonEmptyIterableCompanion2[NEC_C, C_C]
+//
+//  protected def constructor[X](cx: C_C[X]): NEC_C[X] = companion.constructor(cx)
+//  def nonEmptyIterableFactory: NonEmptyIterableCompanion2[NEC_C, C_C] = companion
+//
+//  def view: View[A] = underlying.view
+//
+//  def iterator: Iterator[A] = underlying.iterator
+//
+//  def head: A = underlying.head
+//
+//  def last: A = underlying.last
+//
+//  def transpose[B](implicit asIterable: A <:< Iterable[B]): C_C[NEC_C[B]] = underlying.transpose.map(constructor)
+//
+//}
+//
+//trait NonEmptyIterableCompanion2[NEC_C[_], C_C[_]] {
+//  protected[collections] def className: String
+//  protected[collections] def constructor[A](ca: C_C[A]): NEC_C[A]
+//  protected def newUnderlyingBuilder[A]: mutable.Builder[A, C_C[A]]
+//
+//  def one[A](head: A): NEC_C[A]
+//}
 
-  def underlying: C[A]
+trait NonEmptyIterableOps[C[X] <: IterableOps[X, C, C[X]], NEC[_], +A] extends IterableOnce[A] {
+
+  def underlying: C[A @uncheckedVariance]
   protected def unwrap[X](necX: NEC[X]): C[X]
   def companion: NonEmptyIterableCompanion[C, NEC]
 
@@ -25,46 +54,60 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def transpose[B](implicit asIterable: A <:< Iterable[B]): C[NEC[B]] = underlying.transpose.map(constructor)
 
-  def filter(pred: A => Boolean): C[A] = underlying.filter(pred)
+  def filter(pred: A => Boolean): C[A @uncheckedVariance] = underlying.filter(pred)
 
-  def filterNot(pred: A => Boolean): C[A] = underlying.filterNot(pred)
+  def filterNot(pred: A => Boolean): C[A @uncheckedVariance] = underlying.filterNot(pred)
 
   def withFilter(p: A => Boolean): WithFilter[A, C] = underlying.withFilter(p)
 
-  def partition(p: A => Boolean): (C[A], C[A]) = underlying.partition(p)
+  def partition(p: A => Boolean): (C[A @uncheckedVariance], C[A @uncheckedVariance]) = underlying.partition(p)
 
-  def splitAt(n: Int): (C[A], C[A]) = underlying.splitAt(n)
+  def splitAt(n: Int): (C[A @uncheckedVariance], C[A @uncheckedVariance]) = underlying.splitAt(n)
 
-  def take(n: Int): C[A] = underlying.take(n)
+  def take(n: Int): C[A @uncheckedVariance] = underlying.take(n)
 
-  def takeRight(n: Int): C[A] = underlying.takeRight(n)
+  def takeRight(n: Int): C[A @uncheckedVariance] = underlying.takeRight(n)
 
-  def takeWhile(p: A => Boolean): C[A] = underlying.takeWhile(p)
+  def takeWhile(p: A => Boolean): C[A @uncheckedVariance] = underlying.takeWhile(p)
 
-  def span(p: A => Boolean): (C[A], C[A]) = underlying.span(p)
+  def span(p: A => Boolean): (C[A @uncheckedVariance], C[A @uncheckedVariance]) = underlying.span(p)
 
-  def drop(n: Int): C[A] = underlying.drop(n)
+  def drop(n: Int): C[A @uncheckedVariance] = underlying.drop(n)
 
-  def dropRight(n: Int): C[A] = underlying.dropRight(n)
+  def dropRight(n: Int): C[A @uncheckedVariance] = underlying.dropRight(n)
 
-  def dropWhile(p: A => Boolean): C[A] = underlying.dropWhile(p)
+  def dropWhile(p: A => Boolean): C[A @uncheckedVariance] = underlying.dropWhile(p)
 
-  def grouped(size: Int): Iterator[C[A]] = underlying.grouped(size)
+  def grouped(size: Int): Iterator[C[A @uncheckedVariance]] = underlying.grouped(size)
 
-  def sliding(size: Int): Iterator[C[A]] = underlying.sliding(size)
+  def sliding(size: Int): Iterator[C[A @uncheckedVariance]] = underlying.sliding(size)
 
-  def sliding(size: Int, step: Int): Iterator[C[A]] = underlying.sliding(size, step)
+  def sliding(size: Int, step: Int): Iterator[C[A @uncheckedVariance]] = underlying.sliding(size, step)
 
-  def tail: C[A] = underlying.tail
+  def tail: C[A @uncheckedVariance] = underlying.tail
 
-  def init: C[A] = underlying.init
+  def init: C[A @uncheckedVariance] = underlying.init
 
-  def slice(from: Int, until: Int): C[A] = underlying.slice(from, until)
+  def slice(from: Int, until: Int): C[A @uncheckedVariance] = underlying.slice(from, until)
 
-  def groupBy[K](f: A => K): Map[K, NEC[A]] = underlying.groupBy(f).view.mapValues(constructor).toMap
+  def groupBy[K](f: A => K): Map[K, NEC[A @uncheckedVariance]] = {
+    val grouped: Map[K, C[A]]                        = underlying.groupBy[K](f)
+    val groupedView: MapView[K, C[A]]                = grouped.view
+    val groupedViewWithNecValues: MapView[K, NEC[A]] = groupedView.mapValues[NEC[A @uncheckedVariance]](constructor)
+    val asMap: Map[K, NEC[A]]                        = groupedViewWithNecValues.toMap[K, NEC[A @uncheckedVariance]]
 
-  def groupMap[K, B](key: A => K)(f: A => B): Map[K, NEC[B]] =
-    underlying.groupMap(key)(f).view.mapValues(constructor).toMap
+    asMap
+  }
+
+  def groupMap[K, B](key: A => K)(f: A => B): Map[K, NEC[B @uncheckedVariance]] = {
+    val groupMapped: Map[K, C[B]]         = underlying.groupMap[K, B](key)(f)
+    val groupMappedView: MapView[K, C[B]] = groupMapped.view
+    val groupMappedViewWithNecValues: MapView[K, NEC[B]] =
+      groupMappedView.mapValues[NEC[B @uncheckedVariance]](constructor)
+    val asMap: Map[K, NEC[B]] = groupMappedViewWithNecValues.toMap[K, NEC[B @uncheckedVariance]]
+
+    asMap
+  }
 
   def groupMapReduce[K, B](key: A => K)(f: A => B)(reduce: (B, B) => B): Map[K, B] =
     underlying.groupMapReduce(key)(f)(reduce)
@@ -91,11 +134,11 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
 
   def concat[B >: A](suffix: NEC[B]): NEC[B] = constructor(underlying.concat(unwrap(suffix)))
 
-  def zip[B](that: NEC[B]): NEC[(A, B)] = constructor(underlying zip unwrap(that))
+  def zip[B](that: NEC[B @uncheckedVariance]): NEC[(A, B) @uncheckedVariance] = constructor(underlying zip unwrap(that))
 
-  def zip[B](that: IterableOnce[B]): C[(A, B)] = underlying.zip(that)
+  def zip[B](that: IterableOnce[B]): C[(A, B) @uncheckedVariance] = underlying.zip(that)
 
-  def zipWithIndex: NEC[(A, Int)] = constructor(underlying.zipWithIndex)
+  def zipWithIndex: NEC[(A, Int) @uncheckedVariance] = constructor(underlying.zipWithIndex)
 
   def zipAll[A1 >: A, B](
     that: Iterable[B],
@@ -114,11 +157,11 @@ trait NonEmptyIterableOps[C[+X] <: IterableOps[X, C, C[X]], NEC[+_], +A] extends
       case (l, c, r) => (constructor(l), constructor(c), constructor(r))
     }
 
-  def tails: Iterator[C[A]] = underlying.tails
+  def tails: Iterator[C[A @uncheckedVariance]] = underlying.tails
 
-  def inits: Iterator[C[A]] = underlying.inits
+  def inits: Iterator[C[A @uncheckedVariance]] = underlying.inits
 
-  def tapEach[U](f: A => U): NEC[A] = constructor(underlying.tapEach(f))
+  def tapEach[U](f: A => U): NEC[A @uncheckedVariance] = constructor(underlying.tapEach(f))
 
   def hashCode(): Int
 
