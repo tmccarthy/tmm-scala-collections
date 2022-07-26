@@ -7,9 +7,9 @@ import cats.data.Validated
 import cats.kernel.laws.discipline.{EqTests, HashTests, SemigroupTests}
 import cats.laws.discipline.arbitrary._
 import cats.laws.discipline.{AlignTests, BimonadTests, NonEmptyTraverseTests, SemigroupKTests}
-import cats.tests.CatsSuite
+import munit.DisciplineSuite
 
-class NonEmptyArraySeqInstancesLawsSpec extends CatsSuite {
+class NonEmptyArraySeqInstancesLawsSpec extends DisciplineSuite {
 
   checkAll("Eq for NonEmptyArraySeq", EqTests[NonEmptyArraySeq[EqOnlyInt]].eqv)
   checkAll("Hash for NonEmptyArraySeq", HashTests[NonEmptyArraySeq[Int]].hash)

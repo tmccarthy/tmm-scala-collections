@@ -1,12 +1,12 @@
 package au.id.tmm.collections.cats.instances
 
-import cats.MonoidK
-import org.scalatest.flatspec.AnyFlatSpec
 import au.id.tmm.collections.cats.instances.mapOverKeys._
+import cats.MonoidK
+import munit.FunSuite
 
-class MapOverKeysInstancesSpec extends AnyFlatSpec {
+class MapOverKeysInstancesSpec extends FunSuite {
 
-  "the monoid for a map over keys" should "combine values" in {
+  test("the monoid for a map over keys should combine values") {
     val left: Map[Int, List[String]] = Map(
       1 -> List("a"),
       2 -> List("a"),
@@ -25,7 +25,7 @@ class MapOverKeysInstancesSpec extends AnyFlatSpec {
       3 -> List("c"),
     )
 
-    assert(expected === actual)
+    assertEquals(expected, actual)
   }
 
 }

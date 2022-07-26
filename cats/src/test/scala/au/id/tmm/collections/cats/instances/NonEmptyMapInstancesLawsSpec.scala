@@ -7,9 +7,9 @@ import cats.data.Validated
 import cats.kernel.laws.discipline.{CommutativeSemigroupTests, EqTests, HashTests, SemigroupTests}
 import cats.laws.discipline.arbitrary._
 import cats.laws.discipline.{AlignTests, FunctorTests, SemigroupKTests, UnorderedTraverseTests}
-import cats.tests.CatsSuite
+import munit.DisciplineSuite
 
-class NonEmptyMapInstancesLawsSpec extends CatsSuite {
+class NonEmptyMapInstancesLawsSpec extends DisciplineSuite {
 
   checkAll(
     "Eq for tmmUtils NonEmptyMap",

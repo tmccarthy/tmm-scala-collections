@@ -4,11 +4,11 @@ import au.id.tmm.collections.NonEmptySet
 import au.id.tmm.collections.cats.instances.list._
 import au.id.tmm.collections.syntax.toSafeGroupByOps
 import cats.data.NonEmptyList
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
-class SafeGroupBySyntaxSpec extends AnyFlatSpec {
+class SafeGroupBySyntaxSpec extends FunSuite {
 
-  "safe group by for Set" should "work" in {
+  test("safe group by for Set should work") {
     val groupedBy = Set("apple", "apricot", "banana").safeGroupBy(_.head)
 
     val expected = Map(
@@ -16,10 +16,10 @@ class SafeGroupBySyntaxSpec extends AnyFlatSpec {
       'b' -> NonEmptySet.of("banana"),
     )
 
-    assert(groupedBy === expected)
+    assertEquals(groupedBy, expected)
   }
 
-  it should "work for groupMap" in {
+  test("safe group by for Set should work for groupMap") {
     val groupedBy = Set("apple", "apricot", "banana").safeGroupMap(_.head)(_.toUpperCase)
 
     val expected = Map(
@@ -27,10 +27,10 @@ class SafeGroupBySyntaxSpec extends AnyFlatSpec {
       'b' -> NonEmptySet.of("BANANA"),
     )
 
-    assert(groupedBy === expected)
+    assertEquals(groupedBy, expected)
   }
 
-  it should "work for the key value" in {
+  test("safe group by for Set should work for the key value") {
     val set = Set(
       (1, "hello"),
       (1, "world"),
@@ -42,10 +42,10 @@ class SafeGroupBySyntaxSpec extends AnyFlatSpec {
       2 -> NonEmptySet.of("testing"),
     )
 
-    assert(set.safeGroupByKey === expected)
+    assertEquals(set.safeGroupByKey, expected)
   }
 
-  "safe group by for List" should "work for a list of tuples" in {
+  test("safe group by for List should work for a list of tuples") {
     val l = List(
       "a" -> 1,
       "a" -> 2,
@@ -57,11 +57,11 @@ class SafeGroupBySyntaxSpec extends AnyFlatSpec {
       "b" -> NonEmptyList.of(3),
     )
 
-    assert(l.safeGroupByKey === expectedGrouped)
+    assertEquals(l.safeGroupByKey, expectedGrouped)
   }
 
-  it should "work for an empty list" in {
-    assert(List.empty[Int].safeGroupBy(_ => ()) === Map.empty)
+  test("safe group by for List should work for an empty list") {
+    assertEquals(List.empty[Int].safeGroupBy(_ => ()), Map.empty[Unit, NonEmptyList[Int]])
   }
 
 }

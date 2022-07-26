@@ -8,9 +8,9 @@ import cats.data.Validated
 import cats.kernel.laws.discipline.{BandTests, EqTests, HashTests, MonoidTests}
 import cats.laws.discipline.arbitrary._
 import cats.laws.discipline.{MonadTests, MonoidKTests, SemigroupalTests, TraverseTests}
-import cats.tests.CatsSuite
+import munit.DisciplineSuite
 
-class DupelessSeqInstancesLawsSpec extends CatsSuite {
+class DupelessSeqInstancesLawsSpec extends DisciplineSuite {
 
   checkAll("Eq for DupelessSeq", EqTests[DupelessSeq[EqOnlyInt]].eqv)
   checkAll("Hash for DupelessSeq", HashTests[DupelessSeq[Int]].hash)

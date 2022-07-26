@@ -1,11 +1,12 @@
 package au.id.tmm.collections.cats.instances.unlawful
 
+import au.id.tmm.collections.cats.instances.AdHocTestIgnore
 import au.id.tmm.collections.cats.instances.unlawful.map._
-import au.id.tmm.utilities.testing.AdHocTestIgnore
+import cats.implicits.catsSyntaxGroup
 import cats.kernel.laws.discipline.{CommutativeGroupTests, GroupTests}
-import cats.tests.CatsSuite
+import munit.DisciplineSuite
 
-class MapUnlawfulInstancesSpec extends CatsSuite with AdHocTestIgnore {
+class MapUnlawfulInstancesSpec extends DisciplineSuite with AdHocTestIgnore {
 
   test("the group for map should subtract elements as appropriate") {
     val left = Map(
@@ -24,7 +25,7 @@ class MapUnlawfulInstancesSpec extends CatsSuite with AdHocTestIgnore {
       "pear"   -> -2,
     )
 
-    assert((left |-| right) === expected)
+    assertEquals((left |-| right), expected)
   }
 
   checkAll("Unlawful Group for Map", GroupTests[Map[String, Int]](tmmUtilsUnlawfulGroupForMap).group)

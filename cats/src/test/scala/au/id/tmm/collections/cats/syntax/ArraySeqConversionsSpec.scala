@@ -2,22 +2,25 @@ package au.id.tmm.collections.cats.syntax
 
 import au.id.tmm.collections.NonEmptyArraySeq
 import cats.data.NonEmptyVector
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
 import scala.collection.immutable.ArraySeq
 
-class ArraySeqConversionsSpec extends AnyFlatSpec {
+class ArraySeqConversionsSpec extends FunSuite {
 
-  "a non-empty arrayseq" can "be converted to a non-empty vector" in {
-    assert(NonEmptyArraySeq.of(1, 2, 3).toNev === NonEmptyVector.of(1, 2, 3))
+  test("a non-empty arrayseq can be converted to a non-empty vector") {
+    assertEquals(NonEmptyArraySeq.of(1, 2, 3).toNev, NonEmptyVector.of(1, 2, 3))
   }
 
-  "a non-empty vector" can "be converted to a non-empty arrayseq" in {
-    assert(NonEmptyVector.of(1, 2, 3).to[NonEmptyArraySeq] === NonEmptyArraySeq.of(1, 2, 3))
+  test("a non-empty vector can be converted to a non-empty arrayseq") {
+    assertEquals(NonEmptyVector.of(1, 2, 3).to[NonEmptyArraySeq], NonEmptyArraySeq.of(1, 2, 3))
   }
 
-  it can "be converted to a specialised non-empty arraySeq" in {
-    assert(NonEmptyVector.of(1, 2, 3).toSpecialised[NonEmptyArraySeq].underlying.getClass === classOf[ArraySeq.ofInt])
+  test("a non-empty vector can be converted to a specialised non-empty arraySeq") {
+    assertEquals(
+      NonEmptyVector.of(1, 2, 3).toSpecialised[NonEmptyArraySeq].underlying.getClass.asInstanceOf[Class[Any]],
+      classOf[ArraySeq.ofInt].asInstanceOf[Class[Any]],
+    )
   }
 
 }
