@@ -1,223 +1,223 @@
 package au.id.tmm.collections
 
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
 import scala.collection.immutable.ArraySeq
 
-class DupelessSeqSpec extends AnyFlatSpec {
+class DupelessSeqSpec extends FunSuite {
 
-  "a DupelessSeq" should "retain the order of the earliest element when initialised" in {
-    assert(DupelessSeq(1, 2, 3, 1).toList === List(1, 2, 3))
+  test("a DupelessSeq retain the order of the earliest element when initialised") {
+    assertEquals(DupelessSeq(1, 2, 3, 1).toList, List(1, 2, 3))
   }
 
-  it should "not contain duplicates" in {
-    assert(DupelessSeq(1, 1, 1).count(_ == 1) === 1)
+  test("a DupelessSeq not contain duplicates") {
+    assertEquals(DupelessSeq(1, 1, 1).count(_ == 1), 1)
   }
 
-  it should "retain insertion order" in {
-    assert(DupelessSeq("the", "quick", "brown", "fox").toList === List("the", "quick", "brown", "fox"))
+  test("a DupelessSeq retain insertion order") {
+    assertEquals(DupelessSeq("the", "quick", "brown", "fox").toList, List("the", "quick", "brown", "fox"))
   }
 
-  it should "correctly implement contains" in {
+  test("a DupelessSeq correctly implement contains") {
     val sut = DupelessSeq(1, 2, 3)
 
     assert(sut contains 1)
     assert(!(sut contains 4))
   }
 
-  it should "correctly implement size" in {
-    assert(DupelessSeq(1, 2, 3).size === 3)
+  test("a DupelessSeq correctly implement size") {
+    assertEquals(DupelessSeq(1, 2, 3).size, 3)
   }
 
-  it should "correctly implement size for the empty seq" in {
-    assert(DupelessSeq().size === 0)
+  test("a DupelessSeq correctly implement size for the empty seq") {
+    assertEquals(DupelessSeq().size, 0)
   }
 
-  it should "append an element correctly" in {
-    assert((DupelessSeq(1, 2) :+ 3) === DupelessSeq(1, 2, 3))
+  test("a DupelessSeq append an element correctly") {
+    assertEquals(DupelessSeq(1, 2) :+ 3, DupelessSeq(1, 2, 3))
   }
 
-  it should "return the same seq when appending a duplicate element" in {
+  test("a DupelessSeq return the same seq when appending a duplicate element") {
     val originalSeq = DupelessSeq(1, 2)
 
     assert((originalSeq :+ 1) eq originalSeq)
   }
 
-  it should "prepend an element correctly" in {
-    assert(DupelessSeq(1, 2).+:(3) === DupelessSeq(3, 1, 2))
+  test("a DupelessSeq prepend an element correctly") {
+    assertEquals(DupelessSeq(1, 2).+:(3), DupelessSeq(3, 1, 2))
   }
 
-  it should "return the same seq when prepending a duplicate element" in {
+  test("a DupelessSeq return the same seq when prepending a duplicate element") {
     val originalSeq = DupelessSeq(1, 2)
 
     assert(originalSeq.+:(2) eq originalSeq)
   }
 
-  it should "remove an element correctly" in {
-    assert((DupelessSeq(1, 2, 3) - 3) === DupelessSeq(1, 2))
+  test("a DupelessSeq remove an element correctly") {
+    assertEquals(DupelessSeq(1, 2, 3) - 3, DupelessSeq(1, 2))
   }
 
-  it should "return the same seq when removing an element not in the seq" in {
+  test("a DupelessSeq return the same seq when removing an element not in the seq") {
     val originalSeq = DupelessSeq(1, 2)
     assert((originalSeq - 3) eq originalSeq)
   }
 
-  it should "have a sensible toString" in {
-    assert(DupelessSeq(1, 2, 3).toString === "DupelessSeq(1, 2, 3)")
+  test("a DupelessSeq have a sensible toString") {
+    assertEquals(DupelessSeq(1, 2, 3).toString, "DupelessSeq(1, 2, 3)")
   }
 
-  it should "allow random access" in {
-    assert(DupelessSeq(1, 2, 3, 4)(3) === 4)
+  test("a DupelessSeq allow random access") {
+    assertEquals(DupelessSeq(1, 2, 3, 4)(3), 4)
   }
 
-  it should "support splitting at an index" in {
-    assert(DupelessSeq(1, 2, 3, 4, 5).splitAt(2) === (DupelessSeq(1, 2), DupelessSeq(3, 4, 5)))
+  test("a DupelessSeq support splitting at an index") {
+    assertEquals(DupelessSeq(1, 2, 3, 4, 5).splitAt(2), (DupelessSeq(1, 2), DupelessSeq(3, 4, 5)))
   }
 
-  it should "support updating an element with a new element" in {
+  test("a DupelessSeq support updating an element with a new element") {
     val original = DupelessSeq(1, 2, 3, 4, 5)
 
     val actual = original.updated(3, 8)
 
     val expected = DupelessSeq(1, 2, 3, 8, 5)
 
-    assert(actual === expected)
+    assertEquals(actual, expected)
   }
 
-  it should "remove an element when updating it with an element that exists before it in the seq" in {
+  test("a DupelessSeq remove an element when updating it with an element that exists before it in the seq") {
     val original = DupelessSeq(1, 2, 3, 4, 5)
 
     val actual = original.updated(3, 1)
 
     val expected = DupelessSeq(1, 2, 3, 5)
 
-    assert(actual === expected)
+    assertEquals(actual, expected)
   }
 
-  it should "remove the later element when updating it with an element that exists after it in the seq" in {
+  test("a DupelessSeq remove the later element when updating it with an element that exists after it in the seq") {
     val original = DupelessSeq(1, 2, 3, 4, 5)
 
     val actual = original.updated(1, 3)
 
     val expected = DupelessSeq(1, 3, 4, 5)
 
-    assert(actual === expected)
+    assertEquals(actual, expected)
   }
 
-  it can "pad the end of the seq with an element that is not in the seq" in {
-    assert(DupelessSeq(1, 2, 3, 4, 5).padTo(99999, 6) === DupelessSeq(1, 2, 3, 4, 5, 6))
+  test("a DupelessSeq pad the end of the seq with an element that is not in the seq") {
+    assertEquals(DupelessSeq(1, 2, 3, 4, 5).padTo(99999, 6), DupelessSeq(1, 2, 3, 4, 5, 6))
   }
 
-  it should "return the same seq if padded with an element already in the seq" in {
+  test("a DupelessSeq return the same seq if padded with an element already in the seq") {
     val original = DupelessSeq(1, 2, 3, 4, 5)
 
     assert(original.padTo(99999, 2) eq original)
   }
 
-  it should "support sorting" in {
-    assert(DupelessSeq(1, 5, 3, 2, 4).sorted === DupelessSeq(1, 2, 3, 4, 5))
+  test("a DupelessSeq support sorting") {
+    assertEquals(DupelessSeq(1, 5, 3, 2, 4).sorted, DupelessSeq(1, 2, 3, 4, 5))
   }
 
-  it can "be reversed" in {
-    assert(DupelessSeq(1, 2, 3, 4).reverse === DupelessSeq(4, 3, 2, 1))
+  test("a DupelessSeq be reversed") {
+    assertEquals(DupelessSeq(1, 2, 3, 4).reverse, DupelessSeq(4, 3, 2, 1))
   }
 
-  it can "be iterated over" in {
-    assert(DupelessSeq(1, 2, 3, 4).iterator.toList === List(1, 2, 3, 4))
+  test("a DupelessSeq be iterated over") {
+    assertEquals(DupelessSeq(1, 2, 3, 4).iterator.toList, List(1, 2, 3, 4))
   }
 
-  it can "be iterated over in reverse" in {
-    assert(DupelessSeq(1, 2, 3, 4).reverseIterator.toList === List(4, 3, 2, 1))
+  test("a DupelessSeq be iterated over in reverse") {
+    assertEquals(DupelessSeq(1, 2, 3, 4).reverseIterator.toList, List(4, 3, 2, 1))
   }
 
-  it should "return itself when asked for distinct elements" in {
+  test("a DupelessSeq return itself when asked for distinct elements") {
     val originalSeq = DupelessSeq(1, 2, 3, 4)
 
     assert(originalSeq.distinct eq originalSeq)
   }
 
-  it can "be converted to a Set" in {
-    assert(DupelessSeq(1, 2, 3).toSet === Set(1, 2, 3))
+  test("a DupelessSeq be converted to a Set") {
+    assertEquals(DupelessSeq(1, 2, 3).toSet, Set(1, 2, 3))
   }
 
-  it can "be converted to a Set of a higher type" in {
+  test("a DupelessSeq be converted to a Set of a higher type") {
     val asSet = DupelessSeq(1, 2, 3).toSet[Any]
 
-    assert(asSet.contains("hello world") === false)
+    assertEquals(asSet.contains("hello world"), false)
   }
 
-  it can "be converted to a Vector" in {
-    assert(DupelessSeq(1, 2, 3).toVector === Vector(1, 2, 3))
+  test("a DupelessSeq be converted to a Vector") {
+    assertEquals(DupelessSeq(1, 2, 3).toVector, Vector(1, 2, 3))
   }
 
-  it should "be equal to a DupelessSeq with the same elements and order" in {
-    assert(DupelessSeq(1, 2, 3) === DupelessSeq(1, 2, 3))
+  test("a DupelessSeq be equal to a DupelessSeq with the same elements and order") {
+    assertEquals(DupelessSeq(1, 2, 3), DupelessSeq(1, 2, 3))
   }
 
-  it should "not be equal to a DupelessSeq with the same elements and a different order" in {
-    assert(DupelessSeq(1, 2, 3) !== DupelessSeq(2, 3, 1))
+  test("a DupelessSeq not be equal to a DupelessSeq with the same elements and a different order") {
+    assertNotEquals(DupelessSeq(1, 2, 3), DupelessSeq(2, 3, 1))
   }
 
-  it should "not be equal to a DupelessSeq with different elements" in {
-    assert(DupelessSeq(1, 2, 3) !== DupelessSeq(1, 2, 4))
+  test("a DupelessSeq not be equal to a DupelessSeq with different elements") {
+    assertNotEquals(DupelessSeq(1, 2, 3), DupelessSeq(1, 2, 4))
   }
 
-  it should "not be equal to a list with the same elements" in {
-    assert(DupelessSeq(1, 2, 3) !== List(1, 2, 3))
+  test("a DupelessSeq not be equal to a list with the same elements") {
+    assertNotEquals(DupelessSeq(1, 2, 3): Seq[Int], List(1, 2, 3): Seq[Int])
   }
 
-  it should "not be equal to a list with duplicated elements" in {
-    assert(DupelessSeq(1, 2, 3) !== List(1, 2, 3, 1))
+  test("a DupelessSeq not be equal to a list with duplicated elements") {
+    assertNotEquals(DupelessSeq(1, 2, 3): Seq[Int], List(1, 2, 3, 1): Seq[Int])
   }
 
-  it should "not be equal to a set with the same elements" in {
-    assert(DupelessSeq(1, 2, 3) !== Set(1, 2, 3))
+  test("a DupelessSeq not be equal to a set with the same elements") {
+    assertNotEquals(DupelessSeq(1, 2, 3): Iterable[Int], Set(1, 2, 3): Iterable[Int])
   }
 
-  it should "allow appending an element" in {
-    assert((DupelessSeq(1, 2, 3) :+ 4: DupelessSeq[Int]) === DupelessSeq(1, 2, 3, 4))
+  test("a DupelessSeq allow appending an element") {
+    assertEquals(DupelessSeq(1, 2, 3) :+ 4: DupelessSeq[Int], DupelessSeq(1, 2, 3, 4))
   }
 
-  it should "allow appending a list" in {
-    assert((DupelessSeq(1, 2, 3) ++ List(4, 5, 6): DupelessSeq[Int]) === DupelessSeq(1, 2, 3, 4, 5, 6))
+  test("a DupelessSeq allow appending a list") {
+    assertEquals(DupelessSeq(1, 2, 3) ++ List(4, 5, 6): DupelessSeq[Int], DupelessSeq(1, 2, 3, 4, 5, 6))
   }
 
-  it can "be converted to a NonEmptyDupelessSeq if it is nonEmpty" in {
-    assert(DupelessSeq(1, 2, 3).toNonEmptyDupelessSeq === Some(NonEmptyDupelessSeq.of(1, 2, 3)))
+  test("a DupelessSeq be converted to a NonEmptyDupelessSeq if it is nonEmpty") {
+    assertEquals(DupelessSeq(1, 2, 3).toNonEmptyDupelessSeq, Some(NonEmptyDupelessSeq.of(1, 2, 3)))
   }
 
-  "the empty DupelessSeq" should "be a singleton" in {
+  test("the empty DupelessSeq be a singleton") {
     assert(DupelessSeq() eq DupelessSeq())
   }
 
-  it can "not be converted to a NonEmptyDupelessSeq" in {
-    assert(DupelessSeq().toNonEmptyDupelessSeq === None)
+  test("the empty DupelessSeq not be converted to a NonEmptyDupelessSeq") {
+    assertEquals(DupelessSeq().toNonEmptyDupelessSeq, None)
   }
 
-  "the DupelessSeq builder" should "build the empty seq" in {
+  test("the DupelessSeq builder build the empty seq") {
     assert(DupelessSeq.newBuilder[Int].result() eq DupelessSeq.empty)
   }
 
-  it should "build a seq with 2 distinct items" in {
+  test("the empty DupelessSeq build a seq with 2 distinct items") {
     val builder = DupelessSeq.newBuilder[Int]
 
     builder += 1
     builder += 3
 
-    assert(builder.result() === DupelessSeq(1, 3))
+    assertEquals(builder.result(), DupelessSeq(1, 3))
   }
 
-  it should "iterate in the order of first insertion" in {
+  test("the empty DupelessSeq iterate in the order of first insertion") {
     val builder = DupelessSeq.newBuilder[Int]
 
     builder += 1
     builder += 3
     builder += 1
 
-    assert(builder.result() === DupelessSeq(1, 3))
+    assertEquals(builder.result(), DupelessSeq(1, 3))
   }
 
-  it can "be cleared" in {
+  test("the empty DupelessSeq be cleared") {
     val builder = DupelessSeq.newBuilder[Int]
 
     builder += 1
@@ -227,15 +227,15 @@ class DupelessSeqSpec extends AnyFlatSpec {
     assert(builder.result().isEmpty)
   }
 
-  it can "append multiple elements at once" in {
+  test("the empty DupelessSeq append multiple elements at once") {
     val builder = DupelessSeq.newBuilder[Int]
 
     builder ++= Vector(1, 3, 1)
 
-    assert(builder.result() === DupelessSeq(1, 3))
+    assertEquals(builder.result(), DupelessSeq(1, 3))
   }
 
-  it should "accept a size hint" in {
+  test("the empty DupelessSeq accept a size hint") {
     val builder = DupelessSeq.newBuilder[Int]
 
     builder.sizeHint(5)
@@ -243,19 +243,19 @@ class DupelessSeqSpec extends AnyFlatSpec {
     builder += 1
     builder += 3
 
-    assert(builder.result() === DupelessSeq(1, 3))
+    assertEquals(builder.result(), DupelessSeq(1, 3))
   }
 
-  it can "be converted to an ArraySeq" in {
-    assert(DupelessSeq(1, 2, 3).toArraySeq === ArraySeq(1, 2, 3))
+  test("the empty DupelessSeq be converted to an ArraySeq") {
+    assertEquals(DupelessSeq(1, 2, 3).toArraySeq, ArraySeq(1, 2, 3))
   }
 
-  it should "allow appending an element" in {
-    assert((DupelessSeq(1, 2, 3).appended(4): DupelessSeq[Int]) === DupelessSeq(1, 2, 3, 4))
+  test("the empty DupelessSeq allow appending an element") {
+    assertEquals(DupelessSeq(1, 2, 3).appended(4): DupelessSeq[Int], DupelessSeq(1, 2, 3, 4))
   }
 
-  it should "allow appending a list" in {
-    assert((DupelessSeq(1, 2, 3).appendedAll(List(4, 5, 6)): DupelessSeq[Int]) === DupelessSeq(1, 2, 3, 4, 5, 6))
+  test("the empty DupelessSeq allow appending a list") {
+    assertEquals(DupelessSeq(1, 2, 3).appendedAll(List(4, 5, 6)): DupelessSeq[Int], DupelessSeq(1, 2, 3, 4, 5, 6))
   }
 
 }

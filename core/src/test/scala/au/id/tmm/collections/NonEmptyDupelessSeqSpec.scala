@@ -1,50 +1,51 @@
 package au.id.tmm.collections
 
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
 import scala.collection.immutable.ArraySeq
 
-class NonEmptyDupelessSeqSpec extends AnyFlatSpec {
+class NonEmptyDupelessSeqSpec extends FunSuite {
 
-  "a non-empty dupelessSeq" can "be flattened" in {
+  test("a non-empty dupelessSeq be flattened") {
     val neds: NonEmptyDupelessSeq[NonEmptyDupelessSeq[Int]] = NonEmptyDupelessSeq.of(
       NonEmptyDupelessSeq.of(1),
       NonEmptyDupelessSeq.of(2, 3),
     )
 
-    assert(neds.flatten === NonEmptyDupelessSeq.of(1, 2, 3))
+    assertEquals(neds.flatten, NonEmptyDupelessSeq.of(1, 2, 3))
   }
 
-  it can "be flatMapped to another non-empty dupelessSeq" in {
+  test("a non-empty dupelessSeq be flatMapped to another non-empty dupelessSeq") {
     val neds: NonEmptyDupelessSeq[NonEmptyDupelessSeq[Int]] = NonEmptyDupelessSeq.of(
       NonEmptyDupelessSeq.of(1),
       NonEmptyDupelessSeq.of(2, 3),
     )
 
-    assert(neds.flatMap(identity(_)) === NonEmptyDupelessSeq.of(1, 2, 3))
+    assertEquals(neds.flatMap(identity(_)), NonEmptyDupelessSeq.of(1, 2, 3))
   }
 
-  it can "be flatMapped to a possibly empty collection" in {
+  test("a non-empty dupelessSeq be flatMapped to a possibly empty collection") {
     val neds: NonEmptyDupelessSeq[List[Int]] = NonEmptyDupelessSeq.of(
       List(1),
       List(2, 3),
       List(),
     )
 
-    assert(neds.flatMap(identity(_)) === DupelessSeq(1, 2, 3))
+    assertEquals(neds.flatMap(identity(_)), DupelessSeq(1, 2, 3))
   }
 
-  it can "be converted to an ArraySeq" in {
-    assert(NonEmptyDupelessSeq.of(1, 2, 3).to(ArraySeq.untagged) === ArraySeq.untagged(1, 2, 3))
+  test("a non-empty dupelessSeq be converted to an ArraySeq") {
+    assertEquals(NonEmptyDupelessSeq.of(1, 2, 3).to(ArraySeq.untagged), ArraySeq.untagged(1, 2, 3))
   }
 
-  it can "be converted to a NonEmptySet" in {
-    assert(NonEmptyDupelessSeq.of(1, 2, 3).toNonEmptySet === NonEmptySet.of(1, 2, 3))
+  test("a non-empty dupelessSeq be converted to a NonEmptySet") {
+    assertEquals(NonEmptyDupelessSeq.of(1, 2, 3).toNonEmptySet, NonEmptySet.of(1, 2, 3))
   }
 
-  it can "be grouped" in {
-    assert(
-      NonEmptyDupelessSeq.of("hello", "world").groupBy(_.head) === Map(
+  test("a non-empty dupelessSeq be grouped") {
+    assertEquals(
+      NonEmptyDupelessSeq.of("hello", "world").groupBy(_.head),
+      Map(
         'h' -> NonEmptyDupelessSeq.of("hello"),
         'w' -> NonEmptyDupelessSeq.of("world"),
       ),

@@ -1,12 +1,12 @@
 package au.id.tmm.collections.classes
 
-import au.id.tmm.collections.{NonEmptyDupelessSeq, NonEmptySet}
 import au.id.tmm.collections.syntax.toSafeGroupByOps
-import org.scalatest.flatspec.AnyFlatSpec
+import au.id.tmm.collections.{NonEmptyDupelessSeq, NonEmptySet}
+import munit.FunSuite
 
-class SafeGroupBySpec extends AnyFlatSpec {
+class SafeGroupBySpec extends FunSuite {
 
-  "safe group by for a Set" should "work" in {
+  test("safe group by for a Set work") {
     val set = Set(
       "apple",
       "apricot",
@@ -18,10 +18,10 @@ class SafeGroupBySpec extends AnyFlatSpec {
       'b' -> NonEmptySet.of("banana"),
     )
 
-    assert(set.safeGroupBy(_.head) === expectedGrouped)
+    assertEquals(set.safeGroupBy(_.head), expectedGrouped)
   }
 
-  "safe group by for a NonEmptyDupelessSeq" should "work" in {
+  test("safe group by for a NonEmptyDupelessSeq work") {
     val nonEmptyDupelessSeq = NonEmptyDupelessSeq.of(
       "apple",
       "apricot",
@@ -33,10 +33,10 @@ class SafeGroupBySpec extends AnyFlatSpec {
       'b' -> NonEmptyDupelessSeq.of("banana"),
     )
 
-    assert(nonEmptyDupelessSeq.safeGroupBy(_.head) === expectedGrouped)
+    assertEquals(nonEmptyDupelessSeq.safeGroupBy(_.head), expectedGrouped)
   }
 
-  "safe group by for a NonEmptySet" should "work" in {
+  test("safe group by for a NonEmptySet work") {
     val nonEmptySet = NonEmptySet.of(
       "apple",
       "apricot",
@@ -48,7 +48,7 @@ class SafeGroupBySpec extends AnyFlatSpec {
       'b' -> NonEmptySet.of("banana"),
     )
 
-    assert(nonEmptySet.safeGroupBy(_.head) === expectedGrouped)
+    assertEquals(nonEmptySet.safeGroupBy(_.head), expectedGrouped)
   }
 
 }

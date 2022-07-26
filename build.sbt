@@ -40,17 +40,19 @@ lazy val root = tlCrossRootProject
     circe,
   )
 
-val catsVersion      = "2.8.0"
-val circeVersion     = "0.15.0-M1"
-val scalatestVersion = "3.2.0-M4"
-val tmmUtilsVersion  = "0.4.7"
+val catsVersion            = "2.8.0"
+val circeVersion           = "0.15.0-M1"
+val tmmUtilsVersion        = "0.10.0"
+val mUnitVersion           = "0.7.27"
+val disciplineMunitVersion = "1.0.9"
 
 lazy val core = project
   .in(file("core"))
   .settings(name := "tmm-scala-collections-core")
   .settings(
-    libraryDependencies += "org.scalatest"       %% "scalatest"         % scalatestVersion % Test,
-    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing" % tmmUtilsVersion  % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit" % mUnitVersion % Test,
+    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing-core" % tmmUtilsVersion  % Test,
   )
 
 lazy val scalaCheck = project
@@ -60,8 +62,9 @@ lazy val scalaCheck = project
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3",
   )
   .settings(
-    libraryDependencies += "org.scalatest"       %% "scalatest"         % scalatestVersion % Test,
-    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing" % tmmUtilsVersion  % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit" % mUnitVersion % Test,
+    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing-core" % tmmUtilsVersion  % Test,
   )
   .dependsOn(core)
 
@@ -72,10 +75,11 @@ lazy val cats = project
     libraryDependencies += "org.typelevel" %% "cats-core" % catsVersion,
   )
   .settings(
-    libraryDependencies += "org.scalatest"       %% "scalatest"              % scalatestVersion % Test,
-    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing"      % tmmUtilsVersion  % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit" % mUnitVersion % Test,
+    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing-core"      % tmmUtilsVersion  % Test,
     libraryDependencies += "org.typelevel"       %% "cats-testkit"           % catsVersion      % Test,
-    libraryDependencies += "org.typelevel"       %% "cats-testkit-scalatest" % "1.0.1"          % Test,
+    libraryDependencies += "org.typelevel" %% "discipline-munit"    % disciplineMunitVersion % Test,
   )
   .dependsOn(core, scalaCheck % "compile->test")
 
@@ -86,8 +90,9 @@ lazy val circe = project
     libraryDependencies += "io.circe" %% "circe-core" % circeVersion,
   )
   .settings(
-    libraryDependencies += "org.scalatest"       %% "scalatest"         % scalatestVersion % Test,
-    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing" % tmmUtilsVersion  % Test,
+    testFrameworks += new TestFramework("munit.Framework"),
+    libraryDependencies += "org.scalameta" %% "munit" % mUnitVersion % Test,
+    libraryDependencies += "au.id.tmm.tmm-utils" %% "tmm-utils-testing-core" % tmmUtilsVersion  % Test,
     libraryDependencies += "io.circe"            %% "circe-testing"     % circeVersion     % Test,
   )
   .dependsOn(core, scalaCheck % "compile->test", cats % "compile->test")

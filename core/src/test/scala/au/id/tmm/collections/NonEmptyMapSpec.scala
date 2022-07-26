@@ -1,10 +1,10 @@
 package au.id.tmm.collections
 
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
-class NonEmptyMapSpec extends AnyFlatSpec {
+class NonEmptyMapSpec extends FunSuite {
 
-  "a non-empty map" can "be flatMapped with a possibly empty collection of tuples" in {
+  test("a non-empty map be flatMapped with a possibly empty collection of tuples") {
     val base = NonEmptyMap.of(
       "apple"  -> 1,
       "banana" -> 2,
@@ -25,10 +25,10 @@ class NonEmptyMapSpec extends AnyFlatSpec {
       "banana_2" -> 12,
     )
 
-    assert(actual === expected)
+    assertEquals(actual, expected)
   }
 
-  it can "be flatMapped with a possibly empty collection of single elements" in {
+  test("a non-empty map be flatMapped with a possibly empty collection of single elements") {
     val base = NonEmptyMap.of(
       "apple"  -> 1,
       "banana" -> 2,
@@ -49,10 +49,10 @@ class NonEmptyMapSpec extends AnyFlatSpec {
       "banana_2",
     )
 
-    assert(actual.toList === expected)
+    assertEquals(actual.toList, expected)
   }
 
-  it can "be flatMapped with another NonEmptyMap of tuples" in {
+  test("a non-empty map be flatMapped with another NonEmptyMap of tuples") {
     val base = NonEmptyMap.of(
       "apple"  -> 1,
       "banana" -> 2,
@@ -73,11 +73,11 @@ class NonEmptyMapSpec extends AnyFlatSpec {
       "banana_2" -> 12,
     )
 
-    assert(actual === expected)
+    assertEquals(actual, expected)
   }
 
-  it can "be constructed from a non-empty arrayseq" in {
-    assert(NonEmptyArraySeq.of("hello" -> 1).toNonEmptyMap === NonEmptyMap.one("hello", 1))
+  test("a non-empty map be constructed from a non-empty arrayseq") {
+    assertEquals(NonEmptyArraySeq.of("hello" -> 1).toNonEmptyMap, NonEmptyMap.one("hello", 1))
   }
 
 }

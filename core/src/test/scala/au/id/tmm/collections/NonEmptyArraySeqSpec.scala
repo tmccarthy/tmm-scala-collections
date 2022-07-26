@@ -1,33 +1,35 @@
 package au.id.tmm.collections
 
-import org.scalatest
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
 import scala.collection.immutable.ArraySeq
 import scala.reflect.ClassTag
 
-class NonEmptyArraySeqSpec extends AnyFlatSpec {
+class NonEmptyArraySeqSpec extends FunSuite {
 
-  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: NonEmptyArraySeq[_]): scalatest.Assertion =
-    assert(nonEmptyArraySeq.underlying.getClass === implicitly[ClassTag[T]].runtimeClass)
+  private def assertSpecialisedAs[T : ClassTag](nonEmptyArraySeq: NonEmptyArraySeq[_]): Unit =
+    assertEquals(
+      nonEmptyArraySeq.underlying.getClass.asInstanceOf[Class[Any]],
+      implicitly[ClassTag[T]].runtimeClass.asInstanceOf[Class[Any]],
+    )
 
-  "The specialised factory methods" can "create a specialised NonEmptyArraySeq from one element" in {
+  test("The specialised factory methods create a specialised NonEmptyArraySeq from one element") {
     assertSpecialisedAs[ArraySeq.ofInt](NonEmptyArraySeq.one(1))
   }
 
-  it can "create a specialised NonEmptyArraySeq from many elements" in {
+  test("The specialised factory methods create a specialised NonEmptyArraySeq from many elements") {
     assertSpecialisedAs[ArraySeq.ofInt](NonEmptyArraySeq.of(1, 2, 3))
   }
 
-  it can "create a specialised NonEmptyArraySeq from a head and a tail" in {
+  test("The specialised factory methods create a specialised NonEmptyArraySeq from a head and a tail") {
     assertSpecialisedAs[ArraySeq.ofInt](NonEmptyArraySeq.fromHeadTail(1, List(2, 3)))
   }
 
-  it can "create a specialised NonEmptyArraySeq from an iterable" in {
+  test("The specialised factory methods create a specialised NonEmptyArraySeq from an iterable") {
     assertSpecialisedAs[ArraySeq.ofInt](NonEmptyArraySeq.fromIterable(List(1, 2, 3)).get)
   }
 
-  "The untagged factory methods" can "create an unspecialised NonEmptyArraySeq from one element" in {
+  test("The untagged factory methods create an unspecialised NonEmptyArraySeq from one element") {
     assertSpecialisedAs[ArraySeq.ofRef[_]](NonEmptyArraySeq.untagged.one(1))
   }
 

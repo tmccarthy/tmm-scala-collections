@@ -1,10 +1,10 @@
 package au.id.tmm.collections.syntax
 
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
-class UnzipOpsSpec extends AnyFlatSpec {
+class UnzipOpsSpec extends FunSuite {
 
-  "unzip10" should "unzip" in {
+  test("unzip10 unzip") {
     val list = List(
       (0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
       (10, 11, 12, 13, 14, 15, 16, 17, 18, 19),
@@ -24,10 +24,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(9, 19, 29),
     )
 
-    assert(list.unzip10 === expectedUnzipped)
+    assertEquals(list.unzip10, expectedUnzipped)
   }
 
-  "unzip9" should "unzip" in {
+  test("unzip9 unzip") {
     val list = List(
       (0, 1, 2, 3, 4, 5, 6, 7, 8),
       (10, 11, 12, 13, 14, 15, 16, 17, 18),
@@ -46,10 +46,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(8, 18, 28),
     )
 
-    assert(list.unzip9 === expectedUnzipped)
+    assertEquals(list.unzip9, expectedUnzipped)
   }
 
-  "unzip8" should "unzip" in {
+  test("unzip8 unzip") {
     val list = List(
       (0, 1, 2, 3, 4, 5, 6, 7),
       (10, 11, 12, 13, 14, 15, 16, 17),
@@ -67,10 +67,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(7, 17, 27),
     )
 
-    assert(list.unzip8 === expectedUnzipped)
+    assertEquals(list.unzip8, expectedUnzipped)
   }
 
-  "unzip7" should "unzip" in {
+  test("unzip7 unzip") {
     val list = List(
       (0, 1, 2, 3, 4, 5, 6),
       (10, 11, 12, 13, 14, 15, 16),
@@ -87,10 +87,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(6, 16, 26),
     )
 
-    assert(list.unzip7 === expectedUnzipped)
+    assertEquals(list.unzip7, expectedUnzipped)
   }
 
-  "unzip6" should "unzip" in {
+  test("unzip6 unzip") {
     val list = List(
       (0, 1, 2, 3, 4, 5),
       (10, 11, 12, 13, 14, 15),
@@ -106,10 +106,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(5, 15, 25),
     )
 
-    assert(list.unzip6 === expectedUnzipped)
+    assertEquals(list.unzip6, expectedUnzipped)
   }
 
-  "unzip5" should "unzip" in {
+  test("unzip5 unzip") {
     val list = List(
       (0, 1, 2, 3, 4),
       (10, 11, 12, 13, 14),
@@ -124,10 +124,10 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(4, 14, 24),
     )
 
-    assert(list.unzip5 === expectedUnzipped)
+    assertEquals(list.unzip5, expectedUnzipped)
   }
 
-  "unzip4" should "unzip" in {
+  test("unzip4 unzip") {
     val list = List(
       (0, 1, 2, 3),
       (10, 11, 12, 13),
@@ -141,7 +141,7 @@ class UnzipOpsSpec extends AnyFlatSpec {
       List(3, 13, 23),
     )
 
-    assert(list.unzip4 === expectedUnzipped)
+    assertEquals(list.unzip4, expectedUnzipped)
   }
 
 }

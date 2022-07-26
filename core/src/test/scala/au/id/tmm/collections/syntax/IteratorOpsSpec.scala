@@ -1,59 +1,58 @@
 package au.id.tmm.collections.syntax
 
-import org.scalatest.OneInstancePerTest
-import org.scalatest.flatspec.AnyFlatSpec
+import munit.FunSuite
 
-class IteratorOpsSpec extends AnyFlatSpec with OneInstancePerTest {
+class IteratorOpsSpec extends FunSuite {
 
   private val data     = List("the", "quick", "brown", "fox")
   private val iterator = data.iterator
 
-  "readAtMost" should "read the first n elements of the iterator" in {
-    assert(List("the", "quick") === iterator.readAtMost(2))
+  test("readAtMost read the first n elements of the iterator") {
+    assertEquals(List("the", "quick"), iterator.readAtMost(2).toList)
   }
 
-  it should "leave the underlying iterator iterating through the subsequent elements" in {
+  test("readAtMost leave the underlying iterator iterating through the subsequent elements") {
     iterator.readAtMost(2)
 
-    assert(List("brown", "fox") === iterator.toList)
+    assertEquals(List("brown", "fox"), iterator.toList)
   }
 
-  it should "read only as many elements remain in the iterator" in {
-    assert(data === iterator.readAtMost(5))
+  test("readAtMost read only as many elements remain in the iterator") {
+    assertEquals(data, iterator.readAtMost(5).toList)
   }
 
-  "readUntil" should "read until encountering an element matching the condition" in {
-    assert(Vector("the", "quick", "brown") === iterator.readUntil(_.startsWith("b")))
+  test("readUntil read until encountering an element matching the condition") {
+    assertEquals(Vector("the", "quick", "brown"), iterator.readUntil(_.startsWith("b")))
   }
 
-  it should "leave the underlying iterator iterating through the subsequent elements" in {
+  test("readUntil leave the underlying iterator iterating through the subsequent elements") {
     iterator.readUntil(_.startsWith("b"))
 
-    assert(List("fox") === iterator.toList)
+    assertEquals(List("fox"), iterator.toList)
   }
 
-  it should "read only as many elements remain in the iterator" in {
-    assert(data === iterator.readUntil(_ => false))
+  test("readUntil read only as many elements remain in the iterator") {
+    assertEquals(data, iterator.readUntil(_ => false).toList)
   }
 
-  "readAtMostUntil" should "read until encountering an element matching the condition if that is less than the size limit" in {
-    assert(Vector("the", "quick", "brown") === iterator.readAtMostUntil(3, _ startsWith "b"))
+  test("readAtMostUntil read until encountering an element matching the condition if that is less than the size limit") {
+    assertEquals(Vector("the", "quick", "brown"), iterator.readAtMostUntil(3, _ startsWith "b"))
   }
 
-  it should "read up to the size limit if no elements match condition" in {
-    assert(Vector("the", "quick") === iterator.readAtMostUntil(2, _ => false))
+  test("readAtMostUntil read up to the size limit if no elements match condition") {
+    assertEquals(Vector("the", "quick"), iterator.readAtMostUntil(2, _ => false))
   }
 
-  it should "leave the underlying iterator iterating through the subsequent elements when hitting the number limit" in {
+  test("readAtMostUntil leave the underlying iterator iterating through the subsequent elements when hitting the number limit") {
     iterator.readAtMostUntil(2, _ => false)
 
-    assert(List("brown", "fox") === iterator.toList)
+    assertEquals(List("brown", "fox"), iterator.toList)
   }
 
-  it should "leave the underlying iterator iterating through the subsequent elements when finding an element that matches" in {
+  test("readAtMostUntil leave the underlying iterator iterating through the subsequent elements when finding an element that matches") {
     iterator.readAtMostUntil(4, _ startsWith "b")
 
-    assert(List("fox") === iterator.toList)
+    assertEquals(List("fox"), iterator.toList)
   }
 
 }
