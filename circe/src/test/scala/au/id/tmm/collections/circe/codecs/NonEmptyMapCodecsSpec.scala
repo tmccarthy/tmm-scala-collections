@@ -60,7 +60,10 @@ class NonEmptyMapCodecsSpec extends FunSuite {
   }
 
   test("the non-empty map decoder can not decode an empty json object") {
-    assertEquals(Json.obj().as[NonEmptyMap[String, Int]].leftGet.message, "Empty array cannot be decoded to NonEmptyMap")
+    assertEquals(
+      Json.obj().as[NonEmptyMap[String, Int]].leftGet.message,
+      "Empty array cannot be decoded to NonEmptyMap",
+    )
   }
 
 }

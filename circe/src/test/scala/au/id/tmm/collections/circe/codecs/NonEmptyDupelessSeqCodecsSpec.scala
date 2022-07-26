@@ -15,12 +15,16 @@ class NonEmptyDupelessSeqCodecsSpec extends FunSuite {
 
   test("the nonEmptyDupelessSeqDecoder should decode an array") {
     assertEquals(
-      Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyDupelessSeq[Int]], Right(NonEmptyDupelessSeq.of(1, 2, 3)),
+      Json.arr(1.asJson, 2.asJson, 3.asJson).as[NonEmptyDupelessSeq[Int]],
+      Right(NonEmptyDupelessSeq.of(1, 2, 3)),
     )
   }
 
   test("the nonEmptyDupelessSeqDecoder should silently drop duplicates when decoding") {
-    assertEquals(Json.arr(1.asJson, 1.asJson, 2.asJson).as[NonEmptyDupelessSeq[Int]], Right(NonEmptyDupelessSeq.of(1, 2)))
+    assertEquals(
+      Json.arr(1.asJson, 1.asJson, 2.asJson).as[NonEmptyDupelessSeq[Int]],
+      Right(NonEmptyDupelessSeq.of(1, 2)),
+    )
   }
 
   test("the nonEmptyDupelessSeqDecoder should error if decoding an empty array") {

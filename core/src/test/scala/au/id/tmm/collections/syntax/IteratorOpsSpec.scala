@@ -35,7 +35,9 @@ class IteratorOpsSpec extends FunSuite {
     assertEquals(data, iterator.readUntil(_ => false).toList)
   }
 
-  test("readAtMostUntil read until encountering an element matching the condition if that is less than the size limit") {
+  test(
+    "readAtMostUntil read until encountering an element matching the condition if that is less than the size limit",
+  ) {
     assertEquals(Vector("the", "quick", "brown"), iterator.readAtMostUntil(3, _ startsWith "b"))
   }
 
@@ -43,13 +45,17 @@ class IteratorOpsSpec extends FunSuite {
     assertEquals(Vector("the", "quick"), iterator.readAtMostUntil(2, _ => false))
   }
 
-  test("readAtMostUntil leave the underlying iterator iterating through the subsequent elements when hitting the number limit") {
+  test(
+    "readAtMostUntil leave the underlying iterator iterating through the subsequent elements when hitting the number limit",
+  ) {
     iterator.readAtMostUntil(2, _ => false)
 
     assertEquals(List("brown", "fox"), iterator.toList)
   }
 
-  test("readAtMostUntil leave the underlying iterator iterating through the subsequent elements when finding an element that matches") {
+  test(
+    "readAtMostUntil leave the underlying iterator iterating through the subsequent elements when finding an element that matches",
+  ) {
     iterator.readAtMostUntil(4, _ startsWith "b")
 
     assertEquals(List("fox"), iterator.toList)

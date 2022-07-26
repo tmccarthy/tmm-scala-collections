@@ -6,7 +6,13 @@ import au.id.tmm.collections.scalacheck.nonEmptySet._
 import cats.data.Validated
 import cats.kernel.laws.discipline.{EqTests, HashTests, SemilatticeTests}
 import cats.laws.discipline.arbitrary._
-import cats.laws.discipline.{MonadTests, NonEmptyTraverseTests, SemigroupKTests, SemigroupalTests, UnorderedTraverseTests}
+import cats.laws.discipline.{
+  MonadTests,
+  NonEmptyTraverseTests,
+  SemigroupKTests,
+  SemigroupalTests,
+  UnorderedTraverseTests,
+}
 import munit.DisciplineSuite
 
 class NonEmptySetInstancesLawsSpec extends DisciplineSuite with AdHocTestIgnore {

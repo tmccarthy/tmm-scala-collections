@@ -30,7 +30,10 @@ class NonEmptyArraySeqCodecsSpec extends FunSuite {
   }
 
   test("the nonEmptyArraySeqDecoder should specialise the underlying ArraySeq if a classtag is available") {
-    assertEquals(Json.arr(1.asJson).as[NonEmptyArraySeq[Int]].get.underlying.getClass.asInstanceOf[Class[Any]], classOf[ArraySeq.ofInt].asInstanceOf[Class[Any]])
+    assertEquals(
+      Json.arr(1.asJson).as[NonEmptyArraySeq[Int]].get.underlying.getClass.asInstanceOf[Class[Any]],
+      classOf[ArraySeq.ofInt].asInstanceOf[Class[Any]],
+    )
   }
 
 }
